@@ -1,16 +1,26 @@
 {
-  "name": "test-project",
+  "name": "bachelor-home-erp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shadin-al-mamun/test-project.git"
+  },
   "keywords": [],
-  "author": "Mamun",
+  "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shadin-al-mamun/test-project/issues"
+  },
+  "homepage": "https://github.com/shadin-al-mamun/test-project#readme",
   "dependencies": {
-    "dotenv": "^18.0.5"
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
   }
 }

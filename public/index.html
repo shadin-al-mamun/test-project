@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bachelor Home Hostel ERP | ব্যাচেলর হোম হোস্টেল ইআরপি</title>
+  <meta name="description" content="Centralized Bachelor Hostel and Mess Management ERP with 10 PM Cutoff Engine, Visual Seat Matrix, Daily Bazaar Accounting, and Bilingual Support.">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- ERP System Login Screen (Displayed when unauthenticated) -->
+  <div id="erp-admin-login-screen" style="display: flex; position: fixed; inset: 0; background: #070b14; z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98)); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 34px 28px; width: 100%; max-width: 460px; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);">
+      
+      <div style="width: 58px; height: 58px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.45);">
+        🏠
+      </div>
+      <h2 style="font-size: 21px; font-weight: 800; text-align: center; color: #fff; margin-bottom: 4px;">হোস্টেল ইআরপি লগইন</h2>
+      <p style="font-size: 13px; text-align: center; color: #94a3b8; margin-bottom: 22px;">অ্যাডমিন, ম্যানেজার, অ্যাকাউন্ট্যান্ট ও স্টাফ প্যানেল</p>
+
+      <div id="erp-login-error" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+
+      <form id="form-erp-login">
+        <div class="form-group">
+          <label class="form-label">ইউজার আইডি / মোবাইল নম্বর *</label>
+          <input type="text" id="erp-login-id" class="form-input" placeholder="যেমন: 01700000002" required autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">গোপন পাসওয়ার্ড *</label>
+          <input type="password" id="erp-login-pass" class="form-input" placeholder="পাসওয়ার্ড লিখুন" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 15px; margin-top: 10px;" id="btn-erp-login-submit">
+          🔐 সিস্টেমে প্রবেশ করুন
+        </button>
+      </form>
+
+      <!-- Quick Role Selector Pills -->
+      <div style="margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+        <small style="color: #64748b; display: block; margin-bottom: 8px; font-weight: 600;">⚡ ডেমো রোল দিয়ে এক ক্লিকে টেস্ট করুন (পাসওয়ার্ড: admin123):</small>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick="quickAdminFill('01700000001', 'admin123')">👑 সুপার অ্যাডমিন</button>
+          <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick="quickAdminFill('01700000002', 'admin123')">📋 মেস ম্যানেজার</button>
+          <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick="quickAdminFill('01700000003', 'admin123')">💰 অ্যাকাউন্ট্যান্ট</button>
+          <button type="button" class="btn-outline" style="padding: 4px 10px; font-size: 11.5px;" onclick="quickAdminFill('01700000004', 'admin123')">🍳 বাবুর্চি / স্টাফ</button>
+        </div>
+        <div style="margin-top: 14px; text-align: center;">
+          <a href="border-app.html" target="_blank" style="font-size: 12px; color: #60a5fa; text-decoration: none;">
+            📲 আপনি কি বর্ডার? বর্ডার মোবাইল পোর্টালে যান &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">🏠</div>
+        <div>
+          <div class="brand-title">Bachelor Home</div>
+          <div class="brand-subtitle">HOSTEL ERP • v1.0</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu" id="sidebar-menu">
+        <li class="menu-item active" data-tab="dashboard-view">
+          <button id="nav-btn-dashboard" type="button">
+            <span class="menu-icon">📊</span>
+            <span class="menu-text" data-i18n="menu_dashboard">ড্যাশবোর্ড (Overview)</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="seat-matrix-view">
+          <button id="nav-btn-seats" type="button">
+            <span class="menu-icon">🛏️</span>
+            <span class="menu-text" data-i18n="menu_seats">সিট ম্যাট্রিক্স (Seats)</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="meals-view">
+          <button id="nav-btn-meals" type="button">
+            <span class="menu-icon">🍲</span>
+            <span class="menu-text" data-i18n="menu_meals">মিল খাতা (Meals)</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="bazaar-view">
+          <button id="nav-btn-bazaar" type="button">
+            <span class="menu-icon">🛒</span>
+            <span class="menu-text" data-i18n="menu_bazaar">বাজার খরচ (Bazaar)</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="billing-view">
+          <button id="nav-btn-billing" type="button">
+            <span class="menu-icon">💳</span>
+            <span class="menu-text" data-i18n="menu_billing">ভাড়া ও বিলিং (Finance)</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="reports-view">
+          <button id="nav-btn-reports" type="button">
+            <span class="menu-icon">📈</span>
+            <span class="menu-text" data-i18n="menu_reports">রিপোর্ট ও গুগল শিট</span>
+          </button>
+        </li>
+        <li class="menu-item" data-tab="border-portal-view">
+          <button id="nav-btn-portal" type="button">
+            <span class="menu-icon">📱</span>
+            <span class="menu-text" data-i18n="menu_portal">বর্ডার মোবাইল ভিউ</span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- 10 PM Cutoff Clock Widget in Sidebar -->
+      <div class="sidebar-footer">
+        <div class="cutoff-widget" id="sidebar-cutoff-widget">
+          <div class="cutoff-label">
+            <span>⏰</span>
+            <span data-i18n="cutoff_label">রাত ১০টা কাট-অফ বাকি</span>
+          </div>
+          <div class="cutoff-time" id="cutoff-countdown-timer">02:44:18</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Application Viewport -->
+    <main class="app-main">
+      
+      <!-- Top Sticky Navigation Bar -->
+      <header class="top-navbar" id="top-navbar">
+        <div class="nav-left">
+          <h1 class="page-heading" id="current-page-title">ড্যাশবোর্ড ও হোস্টেল ওভারভিউ</h1>
+        </div>
+        
+        <div class="nav-right">
+          <!-- Simulation Mode Pill (Lets user test before 10 PM vs after 10 PM) -->
+          <div class="simulation-pill" id="btn-toggle-simulation" title="ক্লিক করে কাট-অফ সময়ের আগে/পরে সিমুলেট করুন">
+            <span id="sim-icon">⏳</span>
+            <span id="sim-text">সময় সিমুলেটর: রাত ৯:১৫ (কাট-অফের পূর্বে)</span>
+          </div>
+
+          <!-- Bilingual Switcher -->
+          <button type="button" class="lang-toggle-btn" id="btn-language-toggle">
+            <span id="lang-flag">🇧🇩</span>
+            <span id="lang-label">English</span>
+          </button>
+
+          <!-- Direct Mobile App Link -->
+          <a href="border-app.html" target="_blank" class="btn-primary" style="text-decoration: none; padding: 6px 14px; font-size: 12.5px;" title="বর্ডারদের জন্য সম্পূর্ণ পৃথক মোবাইল অ্যাপ ভিউ">
+            <span>📱</span> <span>বর্ডার মোবাইল অ্যাপ</span>
+          </a>
+
+          <!-- User Role Pill -->
+          <div class="user-profile-badge" id="user-badge">
+            <div class="user-avatar" id="user-avatar-initial">র</div>
+            <div>
+              <div class="user-name" id="user-name-display">মোঃ রফিকুল ইসলাম</div>
+              <span class="user-role-tag" id="user-role-display">ম্যানেজার (Manager)</span>
+            </div>
+          </div>
+
+          <!-- Admin Logout Button -->
+          <button type="button" class="btn-outline" style="padding: 6px 12px; font-size: 12px; color: #f87171; border-color: rgba(239, 68, 68, 0.4);" id="btn-admin-logout" title="সিস্টেম থেকে লগআউট করুন">
+            🚪 লগআউট
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Content -->
+      <div class="page-content">
+
+        <!-- 1. DASHBOARD VIEW -->
+        <section class="tab-view active" id="dashboard-view">
+          
+          <!-- KPI Metrics Row -->
+          <div class="kpi-grid">
+            <article class="kpi-card" style="--card-accent: #3b82f6;">
+              <div class="kpi-header">
+                <span class="kpi-title" data-i18n="kpi_total_seats">মোট সিট সংখ্যা</span>
+                <span class="kpi-icon-wrap">🛏️</span>
+              </div>
+              <div class="kpi-value" id="kpi-total-seats">১০</div>
+              <div class="kpi-meta">
+                <span>অকুপেন্সি রেট:</span>
+                <strong id="kpi-occupancy-rate" style="color: #60a5fa;">৬০%</strong>
+              </div>
+            </article>
+
+            <article class="kpi-card" style="--card-accent: #10b981;">
+              <div class="kpi-header">
+                <span class="kpi-title" data-i18n="kpi_available_seats">ফাঁকা (খালি) সিট</span>
+                <span class="kpi-icon-wrap">🟢</span>
+              </div>
+              <div class="kpi-value" id="kpi-available-seats" style="color: #34d399;">৩</div>
+              <div class="kpi-meta">
+                <span>বুকিং অপেক্ষমান:</span>
+                <strong id="kpi-booked-seats">১ টি</strong>
+              </div>
+            </article>
+
+            <article class="kpi-card" style="--card-accent: #f59e0b;">
+              <div class="kpi-header">
+                <span class="kpi-title" data-i18n="kpi_today_meals">আজকের সর্বমোট মিল</span>
+                <span class="kpi-icon-wrap">🍲</span>
+              </div>
+              <div class="kpi-value" id="kpi-today-meals" style="color: #fbbf24;">১৫</div>
+              <div class="kpi-meta">
+                <span>নাস্তা: ৫ | দুপুর: ৫ | রাত: ৫</span>
+              </div>
+            </article>
+
+            <article class="kpi-card" style="--card-accent: #ef4444;">
+              <div class="kpi-header">
+                <span class="kpi-title" data-i18n="kpi_total_dues">চলতি বকেয়া টাকা</span>
+                <span class="kpi-icon-wrap">⚠️</span>
+              </div>
+              <div class="kpi-value" id="kpi-total-dues" style="color: #f87171;">৳ ১৭,৯০০</div>
+              <div class="kpi-meta">
+                <span>ডিফল্টার বর্ডার: <strong>৩ জন</strong></span>
+              </div>
+            </article>
+          </div>
+
+          <!-- Quick Actions Banner -->
+          <div class="action-banner">
+            <div class="action-banner-text">
+              <h3 data-i18n="banner_title">দ্রুত মেস অপারেশন ও কার্যসম্পাদন</h3>
+              <p data-i18n="banner_desc">নতুন বর্ডার ভর্তি, দৈনিক বাজার হিসাব, বা বকেয়া ভাড়া আদায়ের রসিদ তাৎক্ষণিক তৈরি করুন।</p>
+            </div>
+            <div class="quick-btn-group">
+              <button class="btn-primary" id="btn-quick-add-border" type="button">
+                <span>+</span> <span data-i18n="btn_add_border">নতুন বর্ডার ভর্তি</span>
+              </button>
+              <button class="btn-success" id="btn-quick-add-bazaar" type="button">
+                <span>+</span> <span data-i18n="btn_add_bazaar">বাজার খরচ এন্ট্রি</span>
+              </button>
+              <button class="btn-outline" id="btn-quick-collect-rent" type="button">
+                <span>💳</span> <span data-i18n="btn_collect_rent">ভাড়া আদায় ও মানি রসিদ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Two-Column Grid: Kitchen Requisition & Audit Logs -->
+          <div class="dash-columns">
+            <!-- Left: Morning Kitchen Requisition Card -->
+            <div class="panel-card">
+              <div class="panel-title">
+                <span>🍲 সকালের বাজার ও কিচেন রিকুইজিশন (আগামীকাল)</span>
+                <span class="badge badge-booked" id="dash-lock-badge">কাট-অফ চলছে</span>
+              </div>
+              <div class="req-list">
+                <div class="req-item">
+                  <div class="req-item-left">
+                    <span class="req-item-icon">🍚</span>
+                    <div>
+                      <div class="req-item-name">আনুমানিক চাল প্রয়োজন</div>
+                      <small style="color: var(--text-dim);">জনপ্রতি ১৫০ গ্রাম ভিত্তিতে</small>
+                    </div>
+                  </div>
+                  <div class="req-item-qty" id="req-rice-kg">২.২৫ কেজি</div>
+                </div>
+
+                <div class="req-item">
+                  <div class="req-item-left">
+                    <span class="req-item-icon">🐟</span>
+                    <div>
+                      <div class="req-item-name">মাছ / মাংস আনুমানিক</div>
+                      <small style="color: var(--text-dim);">দুপুর ও রাতের প্রধান মিলের জন্য</small>
+                    </div>
+                  </div>
+                  <div class="req-item-qty" id="req-meat-kg">১.৮০ কেজি</div>
+                </div>
+
+                <div class="req-item">
+                  <div class="req-item-left">
+                    <span class="req-item-icon">🥚</span>
+                    <div>
+                      <div class="req-item-name">ডিম বা সকালের নাস্তা আইটেম</div>
+                      <small style="color: var(--text-dim);">সকালের মিল অনুযায়ী</small>
+                    </div>
+                  </div>
+                  <div class="req-item-qty" id="req-egg-count">৫ পিস</div>
+                </div>
+
+                <div class="req-item">
+                  <div class="req-item-left">
+                    <span class="req-item-icon">🥔</span>
+                    <div>
+                      <div class="req-item-name">শাকসবজি ও নিত্যপ্রয়োজনীয় মসলা</div>
+                      <small style="color: var(--text-dim);">দৈনিক শেয়ারিং বাজেট</small>
+                    </div>
+                  </div>
+                  <div class="req-item-qty" style="color: #34d399;">৳ ৩৫০ - ৪৫০</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: System Audit Activity -->
+            <div class="panel-card">
+              <div class="panel-title">
+                <span>📢 সাম্প্রতিক অডিট ট্রেইল ও কার্যক্রম</span>
+                <button class="btn-outline" style="padding: 4px 8px; font-size: 11px;" id="btn-refresh-audit" type="button">রিফ্রেশ</button>
+              </div>
+              <div id="audit-log-feed" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- Dynamically populated from JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. SEAT MATRIX VIEW -->
+        <section class="tab-view" id="seat-matrix-view">
+          <div class="seat-controls">
+            <div class="legend-group">
+              <span class="legend-badge"><span class="dot dot-available"></span> খালি সিট (Available)</span>
+              <span class="legend-badge"><span class="dot dot-occupied"></span> বরাদ্দকৃত (Occupied)</span>
+              <span class="legend-badge"><span class="dot dot-booked"></span> বুকড (Booked)</span>
+              <span class="legend-badge"><span class="dot dot-maintenance"></span> মেরামত (Maintenance)</span>
+            </div>
+            <div>
+              <button class="btn-primary" id="btn-open-add-border-modal" type="button">+ নতুন বর্ডার সিট বরাদ্দ দিন</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Visual Seat Hierarchy Container -->
+          <div id="seat-matrix-container">
+            <!-- Populated via app.js -->
+          </div>
+        </section>
+
+        <!-- 3. MEALS VIEW -->
+        <section class="tab-view" id="meals-view">
+          <div class="seat-controls">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <h3 style="font-size: 17px; font-weight: 700;">আগামীকালের মিল রস্টার (০৮ অক্টোবর ২০২৬)</h3>
+              <span class="badge badge-booked" id="meal-cutoff-status-tag">কাট-অফ সময়: রাত ১০:০০ পর্যন্ত উন্মুক্ত</span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-outline" id="btn-open-override-modal" type="button">⚠️ রাত ১০টার পর জরুরি ওভাররাইড</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="modern-table" id="meals-roster-table">
+              <thead>
+                <tr>
+                  <th>বর্ডারের নাম</th>
+                  <th>সিট নং</th>
+                  <th style="text-align: center;">সকালের নাস্তা</th>
+                  <th style="text-align: center;">দুপুরের খাবার</th>
+                  <th style="text-align: center;">রাতের খাবার</th>
+                  <th style="text-align: center;">মেহমান মিল</th>
+                  <th style="text-align: center;">মোট পয়েন্ট</th>
+                  <th style="text-align: center;">অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="meals-roster-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. BAZAAR VIEW -->
+        <section class="tab-view" id="bazaar-view">
+          <div class="seat-controls">
+            <div>
+              <h3 style="font-size: 17px; font-weight: 700;">মেসের দৈনিক বাজার ও খরচ খাতা</h3>
+              <p style="font-size: 13px; color: var(--text-muted);">চলতি মাসের মোট বাজার: <strong id="total-bazaar-display" style="color: #60a5fa;">৳ ৮,৪৪০.০০</strong></p>
+            </div>
+            <button class="btn-success" id="btn-open-add-bazaar-modal" type="button">+ নতুন বাজার খরচ যুক্ত করুন</button>
+          </div>
+
+          <div class="table-container">
+            <table class="modern-table" id="bazaar-table">
+              <thead>
+                <tr>
+                  <th>তারিখ</th>
+                  <th>ক্যাটাগরি</th>
+                  <th>বাজারের বিবরণী</th>
+                  <th>টাকার পরিমাণ</th>
+                  <th>পরিশোধকারী</th>
+                  <th>স্ট্যাটাস</th>
+                </tr>
+              </thead>
+              <tbody id="bazaar-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 5. BILLING & FINANCE VIEW -->
+        <section class="tab-view" id="billing-view">
+          <div class="seat-controls">
+            <div>
+              <h3 style="font-size: 17px; font-weight: 700;">মাসিক ভাড়া, মিল বিল ও ইনভয়েস</h3>
+              <p style="font-size: 13px; color: var(--text-muted);">মাসের ১ তারিখে স্বয়ংক্রিয়ভাবে ইনভয়েস তৈরি হয়।</p>
+            </div>
+            <button class="btn-primary" id="btn-open-payment-modal" type="button">💳 টাকা গ্রহণ ও মানি রসিদ</button>
+          </div>
+
+          <div class="table-container">
+            <table class="modern-table" id="invoices-table">
+              <thead>
+                <tr>
+                  <th>ইনভয়েস নং</th>
+                  <th>বর্ডার নাম</th>
+                  <th>সিট</th>
+                  <th>সিট ভাড়া</th>
+                  <th>মিল খরচ</th>
+                  <th>ইউটিলিটি</th>
+                  <th>মোট বিল</th>
+                  <th>আদায়</th>
+                  <th>বকেয়া</th>
+                  <th>স্ট্যাটাস</th>
+                  <th>অ্যাকশন</th>
+                </tr>
+              </thead>
+              <tbody id="invoices-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 6. REPORTS & GOOGLE SHEETS VIEW -->
+        <section class="tab-view" id="reports-view">
+          <div class="action-banner" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.95)); border-color: rgba(16, 185, 129, 0.3);">
+            <div class="action-banner-text">
+              <h3 style="color: #34d399;">📊 গুগল শিট লাইভ ক্লাউড ব্যাকআপ ও সিঙ্ক</h3>
+              <p>সকল বর্ডারের ৩১ দিনের মিল তালিকা, দৈনিক বাজার খরচ ও জমা-খরচের খতিয়ান এক ক্লিকে গুগল শিটে সিঙ্ক করুন।</p>
+            </div>
+            <div>
+              <button class="btn-success" id="btn-sync-google-sheets" type="button" style="padding: 12px 24px; font-size: 15px;">
+                <span>🔄</span> <span id="sync-btn-text">গুগল শিটে এখন সিঙ্ক করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="sync-success-alert" style="display: none; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;">
+            <h4 style="color: #34d399; margin-bottom: 4px;">✅ গুগল শিট সফলভাবে আপডেট হয়েছে!</h4>
+            <p style="font-size: 13.5px;" id="sync-success-details"></p>
+            <div style="margin-top: 10px;">
+              <a href="https://docs.google.com/spreadsheets/d/1BxiMVs0XR_Bachelor_Home_ERP_Demo/edit" target="_blank" class="btn-outline" style="font-size: 12px; padding: 6px 14px; text-decoration: none;">
+                🌐 ওপেন করুন লাইভ গুগল শিট (ডেমো)
+              </a>
+            </div>
+          </div>
+
+          <!-- Accounts & Cash Drawers Summary -->
+          <div class="panel-card" style="margin-bottom: 24px;">
+            <div class="panel-title">
+              <span>🏦 মেস ও হোস্টেল ফান্ড অ্যাকাউন্টস</span>
+            </div>
+            <div class="kpi-grid" style="margin-bottom: 0;" id="accounts-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. BORDER MOBILE SELF-SERVICE PORTAL VIEW -->
+        <section class="tab-view" id="border-portal-view">
+          <div style="max-width: 480px; margin: 0 auto 16px auto; text-align: center;">
+            <a href="border-app.html" target="_blank" class="btn-success" style="text-decoration: none; display: inline-flex; width: 100%; justify-content: center; padding: 12px; font-size: 14.5px; border-radius: 12px;">
+              📲 আলাদা ফুল-স্ক্রিন ডেডিকেটেড মোবাইল অ্যাপ ওপেন করুন
+            </a>
+          </div>
+          <div style="max-width: 480px; margin: 0 auto; background: var(--navy-850); border: 1px solid var(--border-glass-bright); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-card);">
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-glass); padding-bottom: 14px; margin-bottom: 18px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="user-avatar" style="width: 44px; height: 44px; font-size: 18px;">তা</div>
+                <div>
+                  <h3 style="font-size: 16px; font-weight: 700;">তানভীর হাসান</h3>
+                  <small style="color: #93c5fd;">রুম ৩০১ (সিট ১ - জানালা সাইড)</small>
+                </div>
+              </div>
+              <span class="badge badge-available">অ্যাক্টিভ বর্ডার</span>
+            </div>
+
+            <!-- Cutoff Countdown Widget in Mobile View -->
+            <div class="cutoff-widget" style="margin-bottom: 20px;">
+              <div class="cutoff-label">পরদিনের মিল কাট-অফ লাইভ কাউন্টডাউন</div>
+              <div class="cutoff-time" id="mobile-cutoff-timer">02:44:18</div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 18px; margin-bottom: 20px;">
+              <h4 style="font-size: 14.5px; margin-bottom: 14px; font-weight: 700;">🍲 আগামীকাল (০৮ অক্টোবর) আপনার খাবার:</h4>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>সকালের নাস্তা (১ টি)</span>
+                  <button type="button" class="btn-success" style="padding: 6px 14px; font-size: 12px;" id="mob-toggle-breakfast">অন (চালু)</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>দুপুরের খাবার (১ টি)</span>
+                  <button type="button" class="btn-success" style="padding: 6px 14px; font-size: 12px;" id="mob-toggle-lunch">অন (চালু)</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>রাতের খাবার (১ টি)</span>
+                  <button type="button" class="btn-outline" style="padding: 6px 14px; font-size: 12px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);" id="mob-toggle-dinner">অফ (বন্ধ)</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 18px;">
+              <h4 style="font-size: 14.5px; margin-bottom: 12px; font-weight: 700;">💳 আপনার চলতি মাসের স্টেটমেন্ট:</h4>
+              <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px;">
+                <span style="color: var(--text-muted);">সিট ভাড়া:</span>
+                <span>৳ ৩,৫০০.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px;">
+                <span style="color: var(--text-muted);">মিল খরচ (চলতি ৪২.৫ টি):</span>
+                <span>৳ ২,৬০০.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 6px;">
+                <span style="color: var(--text-muted);">ইউটিলিটি ও খালা বিল:</span>
+                <span>৳ ১,১০০.০০</span>
+              </div>
+              <div style="border-top: 1px solid var(--border-glass); padding-top: 10px; margin-top: 8px; display: flex; justify-content: space-between; font-weight: 700;">
+                <span>মোট পরিশোধিত:</span>
+                <span style="color: #34d399;">৳ ৭,২০০.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; margin-top: 4px;">
+                <span>অবশিষ্ট বকেয়া:</span>
+                <span style="color: #34d399;">৳ ০.০০ (সম্পূর্ণ পরিশোধিত)</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+      <button class="mobile-nav-item active" data-tab="dashboard-view">
+        <span class="mobile-nav-icon">📊</span>
+        <span>ওভারভিউ</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="seat-matrix-view">
+        <span class="mobile-nav-icon">🛏️</span>
+        <span>সিট</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="meals-view">
+        <span class="mobile-nav-icon">🍲</span>
+        <span>মিল</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="billing-view">
+        <span class="mobile-nav-icon">💳</span>
+        <span>বিলিং</span>
+      </button>
+      <button class="mobile-nav-item" data-tab="border-portal-view">
+        <span class="mobile-nav-icon">📱</span>
+        <span>পোর্টাল</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- MODAL: ADD BORDER & SEAT ALLOCATION -->
+  <div class="modal-overlay" id="modal-add-border">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">নতুন বর্ডার ভর্তি ও সিট বরাদ্দ</h3>
+        <button class="close-btn" data-close-modal="modal-add-border" type="button">&times;</button>
+      </div>
+      <form id="form-add-border">
+        <div class="form-group">
+          <label class="form-label">বর্ডারের পূর্ণ নাম *</label>
+          <input type="text" id="border-name" class="form-input" placeholder="যেমন: তানভীর হাসান" required>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">মোবাইল নম্বর *</label>
+            <input type="tel" id="border-phone" class="form-input" placeholder="017XXXXXXXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">জাতীয় পরিচয়পত্র (NID) *</label>
+            <input type="text" id="border-nid" class="form-input" placeholder="NID বা জন্মনিবন্ধন নং" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">সিট নির্বাচন করুন *</label>
+          <select id="border-seat-select" class="form-select" required>
+            <option value="">-- ফাঁকা সিট বেছে নিন --</option>
+            <option value="st-304-1">রুম ৩০৪ / উইন্ডো সাইড (ভাড়া: ৳ ৩,৪০০)</option>
+            <option value="st-304-2">রুম ৩০৪ / ডোর সাইড (ভাড়া: ৳ ৩,২০০)</option>
+            <option value="st-401-2">রুম ৪০১ / এসি মাস্টার বেড ২ (ভাড়া: ৳ ৪,৫০০)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">পেশা বা শিক্ষাপ্রতিষ্ঠান</label>
+          <input type="text" id="border-institution" class="form-input" placeholder="যেমন: ঢাকা বিশ্ববিদ্যালয় / ব্যাংক কর্মকর্তা">
+        </div>
+        <div class="form-group">
+          <label class="form-label">জরুরি অভিভাবকের নাম ও ফোন</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <input type="text" id="border-guardian-name" class="form-input" placeholder="অভিভাবকের নাম">
+            <input type="tel" id="border-guardian-phone" class="form-input" placeholder="অভিভাবকের ফোন">
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn-outline" data-close-modal="modal-add-border">বাতিল</button>
+          <button type="submit" class="btn-primary">সিট বরাদ্দ নিশ্চিত করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD BAZAAR EXPENSE -->
+  <div class="modal-overlay" id="modal-add-bazaar">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">দৈনিক বাজার খরচ এন্ট্রি</h3>
+        <button class="close-btn" data-close-modal="modal-add-bazaar" type="button">&times;</button>
+      </div>
+      <form id="form-add-bazaar">
+        <div class="form-group">
+          <label class="form-label">খরচের ক্যাটাগরি *</label>
+          <select id="bazaar-category" class="form-select" required>
+            <option value="মাছ ও মাংস">মাছ ও মাংস</option>
+            <option value="শাকসবজি ও আলু">শাকসবজি ও আলু</option>
+            <option value="চাল ও ডাল">চাল ও ডাল</option>
+            <option value="তেল ও মসলা">তেল ও মসলা</option>
+            <option value="গ্যাস সিলিন্ডার">গ্যাস সিলিন্ডার</option>
+            <option value="অন্যান্য কিচেন সামগ্রী">অন্যান্য কিচেন সামগ্রী</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">বাজারের বিবরণী *</label>
+          <textarea id="bazaar-description" class="form-textarea" rows="2" placeholder="যেমন: রুই মাছ ৩ কেজি, সোনালি মুরগি ৪ কেজি" required></textarea>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">টাকার পরিমাণ (৳) *</label>
+            <input type="number" id="bazaar-amount" class="form-input" placeholder="যেমন: ২৪৫০" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">পরিশোধের উৎস</label>
+            <select id="bazaar-payer" class="form-select">
+              <option value="ক্যাশ বক্স">মেস ক্যাশ বক্স</option>
+              <option value="ম্যানেজার">ম্যানেজার (ব্যক্তিগত অগ্রিম)</option>
+              <option value="বিকাশ অ্যাকাউন্ট">বিকাশ ফান্ড</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn-outline" data-close-modal="modal-add-bazaar">বাতিল</button>
+          <button type="submit" class="btn-success">খরচ সংরক্ষণ করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MANAGER POST-10 PM OVERRIDE -->
+  <div class="modal-overlay" id="modal-override-meal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚠️ রাত ১০টার পর জরুরি মিল পরিবর্তন</h3>
+        <button class="close-btn" data-close-modal="modal-override-meal" type="button">&times;</button>
+      </div>
+      <form id="form-override-meal">
+        <p style="font-size: 13px; color: #fbbf24; margin-bottom: 14px;">
+          * রাত ১০:০০ টার পর যে কোনো মিল পরিবর্তনের জন্য সিস্টেমে কারণ (Audit Reason) রেকর্ড করা বাধ্যতামূলক।
+        </p>
+        <div class="form-group">
+          <label class="form-label">বর্ডার নির্বাচন করুন *</label>
+          <select id="override-border-id" class="form-select" required>
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">পরিবর্তনের ধরণ *</label>
+          <select id="override-meal-type" class="form-select" required>
+            <option value="breakfast">সকালের নাস্তা</option>
+            <option value="lunch">দুপুরের খাবার</option>
+            <option value="dinner">রাতের খাবার</option>
+            <option value="guest">মেহমান মিল</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">নতুন স্ট্যাটাস / সংখ্যা *</label>
+          <select id="override-meal-value" class="form-select" required>
+            <option value="1">অন (১ টি মিল)</option>
+            <option value="0">অফ (০ টি মিল)</option>
+            <option value="2">২ টি মিল</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">পরিবর্তনের কারণ (বাধ্যতামূলক অডিট নোট) *</label>
+          <textarea id="override-audit-reason" class="form-textarea" rows="2" placeholder="যেমন: বর্ডার জরুরি প্রয়োজনে রাত ১১টায় ঢাকা ফিরেছেন, মালিক অনুমোদিত।" required></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn-outline" data-close-modal="modal-override-meal">বাতিল</button>
+          <button type="submit" class="btn-primary">লগ সহ ওভাররাইড নিশ্চিত করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PAYMENT COLLECTION & MONEY RECEIPT -->
+  <div class="modal-overlay" id="modal-collect-payment">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">ভাড়া ও মিলের টাকা আদায় (Payment Collection)</h3>
+        <button class="close-btn" data-close-modal="modal-collect-payment" type="button">&times;</button>
+      </div>
+      <form id="form-collect-payment">
+        <div class="form-group">
+          <label class="form-label">বকেয়া ইনভয়েস নির্বাচন করুন *</label>
+          <select id="payment-invoice-select" class="form-select" required>
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">আদায়ের পরিমাণ (টাকা) *</label>
+            <input type="number" id="payment-amount" class="form-input" placeholder="টাকার অংক" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">পেমেন্ট মাধ্যম *</label>
+            <select id="payment-method" class="form-select" required>
+              <option value="CASH">নগদ ক্যাশ (Cash)</option>
+              <option value="BKASH">বিকাশ (bKash)</option>
+              <option value="NAGAD">নগদ (Nagad)</option>
+              <option value="BANK">ব্যাংক ট্রান্সফার</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">জমার অ্যাকাউন্ট *</label>
+          <select id="payment-account" class="form-select" required>
+            <option value="acc-001">Hostel Cash Box (ক্যাশ বক্স)</option>
+            <option value="acc-002">bKash Merchant (01711-223344)</option>
+            <option value="acc-003">Islami Bank Current A/C</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ট্রানজেকশন আইডি / রেফারেন্স (বিকাশ/ব্যাংক হলে)</label>
+          <input type="text" id="payment-trx-id" class="form-input" placeholder="যেমন: BKH9281741">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn-outline" data-close-modal="modal-collect-payment">বাতিল</button>
+          <button type="submit" class="btn-success">টাকা জমা করুন ও রসিদ তৈরি করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DIGITAL MONEY RECEIPT PREVIEW -->
+  <div class="modal-overlay" id="modal-receipt-view">
+    <div class="modal-content" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3 class="modal-title">ডিজিটাল মানি রসিদ (Money Receipt)</h3>
+        <button class="close-btn" data-close-modal="modal-receipt-view" type="button">&times;</button>
+      </div>
+      
+      <div class="receipt-box" id="printable-receipt-card">
+        <div class="receipt-header">
+          <h2 style="font-size: 19px; font-weight: 800; color: #0f172a;">BACHELOR HOME HOSTEL</h2>
+          <small style="color: #64748b;">House #12, Road #4, Mirpur-10, Dhaka | 01711-000000</small>
+          <div style="margin-top: 8px;">
+            <span style="background: #1e293b; color: #fff; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 700;">
+              MONEY RECEIPT
+            </span>
+          </div>
+        </div>
+
+        <div class="receipt-row">
+          <span>রসিদ নং (Receipt No):</span>
+          <strong id="receipt-no-val">MR-202610-0042</strong>
+        </div>
+        <div class="receipt-row">
+          <span>তারিখ (Date):</span>
+          <span id="receipt-date-val">2026-10-07</span>
+        </div>
+        <div class="receipt-row">
+          <span>বর্ডারের নাম (Border Name):</span>
+          <strong id="receipt-border-val">তানভীর হাসান</strong>
+        </div>
+        <div class="receipt-row">
+          <span>পেমেন্ট মাধ্যম (Method):</span>
+          <span id="receipt-method-val">BKASH</span>
+        </div>
+        <div class="receipt-row">
+          <span>ট্রানজেকশন রেফারেন্স (TrxID):</span>
+          <span id="receipt-trx-val">BKH98214712</span>
+        </div>
+
+        <div class="receipt-total receipt-row">
+          <span>আদায়কৃত মোট টাকা (Paid):</span>
+          <span id="receipt-amount-val" style="color: #059669;">৳ ৫,০০০.০০</span>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #64748b; border-top: 1px dashed #cbd5e1; padding-top: 12px;">
+          এটি একটি কম্পিউটার-জেনারেটেড ডিজিটাল রসিদ। কোনো স্বাক্ষরের প্রয়োজন নেই।
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+        <button type="button" class="btn-outline" data-close-modal="modal-receipt-view">বন্ধ করুন</button>
+        <button type="button" class="btn-primary" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

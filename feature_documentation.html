@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>ব্যাচেলর হোম হোস্টেল ইআরপি - সিস্টেম ফিচার ও ব্যবহার নির্দেশিকা</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4;
+      margin: 12mm 13mm 14mm 13mm;
+      @bottom-right {
+        content: "পৃষ্ঠা " counter(page) " / " counter(pages);
+        font-size: 8pt;
+        color: #64748b;
+        font-family: 'Hind Siliguri', 'Inter', sans-serif;
+      }
+      @bottom-left {
+        content: "ব্যাচেলর হোম হোস্টেল ইআরপি (Bachelor Home ERP)";
+        font-size: 8pt;
+        color: #94a3b8;
+        font-family: 'Hind Siliguri', 'Inter', sans-serif;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', 'Nirmala UI', 'Segoe UI', Tahoma, Arial, sans-serif;
+      font-size: 9pt;
+      line-height: 1.45;
+      color: #1e293b;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 95vh;
+      padding: 30px 24px;
+      border: 3px double #0284c7;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 45%, #f8fafc 100%);
+    }
+
+    .cover-header {
+      text-align: center;
+      padding-top: 25px;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: #0284c7;
+      color: #ffffff;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 10.5pt;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    .cover-title {
+      font-size: 25pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 6px 0;
+      line-height: 1.25;
+    }
+
+    .cover-subtitle {
+      font-size: 13.5pt;
+      font-weight: 700;
+      color: #0369a1;
+      margin: 0 0 18px 0;
+    }
+
+    .cover-tagline {
+      font-size: 10pt;
+      color: #475569;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    .cover-divider {
+      width: 70px;
+      height: 4px;
+      background: #0284c7;
+      margin: 18px auto;
+      border-radius: 2px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin: 25px 10px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 8pt;
+      color: #64748b;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+      font-size: 9.5pt;
+      color: #0f172a;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .cover-footer {
+      text-align: center;
+      padding-bottom: 10px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 12px;
+      font-size: 8.5pt;
+      color: #64748b;
+    }
+
+    /* Page Layout */
+    .chapter-break {
+      page-break-before: always;
+    }
+
+    .avoid-break {
+      page-break-inside: avoid;
+    }
+
+    /* Typography & Headers */
+    h1, h2, h3, h4 {
+      font-family: 'Hind Siliguri', 'Inter', sans-serif;
+      color: #0f172a;
+      margin-top: 0;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 15pt;
+      font-weight: 800;
+      color: #0369a1;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    h2 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h3 {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      margin-top: 8px;
+    }
+
+    p {
+      margin: 0 0 6px 0;
+      color: #334155;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0 10px 0;
+      font-size: 8pt;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: left;
+      padding: 5px 7px;
+      border: 1px solid #cbd5e1;
+    }
+
+    td {
+      padding: 5px 7px;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 7pt;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .badge-success { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .badge-primary { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    .badge-warning { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .badge-neutral { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    /* Callout & Alert Boxes */
+    .callout {
+      background: #f8fafc;
+      border-left: 4px solid #0284c7;
+      padding: 8px 10px;
+      margin: 8px 0 10px 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .callout-warning {
+      background: #fffbeb;
+      border-left-color: #f59e0b;
+    }
+
+    .callout-success {
+      background: #f0fdf4;
+      border-left-color: #10b981;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 8.5pt;
+      margin-bottom: 2px;
+      color: #0f172a;
+    }
+
+    /* Feature Grid / Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 6px 0 10px 0;
+    }
+
+    .feature-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .feature-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 3px;
+    }
+
+    .feature-card-title {
+      font-weight: 700;
+      font-size: 9pt;
+      color: #0369a1;
+    }
+
+    /* Workflow Steps */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 6px 0 8px 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+
+    .step-number {
+      width: 20px;
+      height: 20px;
+      background: #0284c7;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 7.5pt;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 8.5pt;
+      margin-bottom: 1px;
+    }
+
+    .step-desc {
+      font-size: 8pt;
+      color: #475569;
+      margin: 0;
+    }
+
+    /* Code & Formula Box */
+    .formula-box {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8pt;
+      margin: 5px 0 8px 0;
+      border-left: 3px solid #38bdf8;
+    }
+
+    /* Module Header Banner */
+    .module-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+
+    .module-banner h2 {
+      color: #ffffff;
+      margin: 0;
+      font-size: 10.5pt;
+    }
+
+    .module-banner p {
+      color: #e0f2fe;
+      margin: 2px 0 0 0;
+      font-size: 8pt;
+    }
+
+    ul, ol {
+      margin: 3px 0 6px 0;
+      padding-left: 16px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 2px;
+    }
+
+    .text-success { color: #16a34a; font-weight: 700; }
+    .text-danger { color: #dc2626; font-weight: 700; }
+    .text-warning { color: #d97706; font-weight: 700; }
+    .text-primary { color: #0284c7; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== COVER PAGE ==================== -->
+  <div class="cover-page">
+    <div class="cover-header">
+      <div class="cover-badge">অফিসিয়াল সফটওয়্যার ডকুমেন্টেশন ও ফিচার গাইড</div>
+      <h1 class="cover-title">ব্যাচেলর হোম হোস্টেল ইআরপি</h1>
+      <div class="cover-subtitle">Bachelor Home Hostel & Mess Management ERP</div>
+      <div class="cover-divider"></div>
+      <p class="cover-tagline">
+        ব্যাচেলর মেস, ছাত্রাবাস ও হোস্টেল পরিচালনার জন্য স্বয়ংক্রিয় সিট ম্যানেজমেন্ট, রাত ১০টা মিল কাট-অফ ইঞ্জিন, দৈনিক বাজার ও ভাউচার হিসাব, ডিজিটাল মানি রসিদ এবং বর্ডার মোবাইল পিডব্লিউএ (PWA) সম্বলিত আধুনিক ইআরপি সমাধান।
+      </p>
+    </div>
+
+    <div class="cover-meta-grid">
+      <div class="meta-item">
+        <span class="meta-label">সফটওয়্যার নাম</span>
+        <span class="meta-value">Bachelor Home ERP</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">সিস্টেম সংস্করণ</span>
+        <span class="meta-value">v1.0.0 (October 2026)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">ডকুমেন্টের উদ্দেশ্য</span>
+        <span class="meta-value">বর্তমান ফিচার বিশ্লেষণ ও ভবিষ্যৎ ফিচার পর্যালোচনা</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">ব্যবহারকারী রোল</span>
+        <span class="meta-value">ম্যানেজার, অ্যাডমিন, অ্যাকাউন্ট্যান্ট, বর্ডার</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">প্রযুক্তিগত ভিত্তি</span>
+        <span class="meta-value">Node.js, Express, REST API, PWA Mobile, JSON DB</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">ভাষা ও ক্লাউড সাপোর্ট</span>
+        <span class="meta-value">দ্বিভাষিক (বাংলা ও ইংরেজি), গুগল শিট লাইভ সিঙ্ক</span>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <strong>ব্যাচেলর হোম হোস্টেল ম্যানেজমেন্ট সিস্টেম</strong> • সর্বস্বত্ব সংরক্ষিত ২০২৬ • প্রস্তুতকারী: এআই সিস্টেম আর্কিটেক্ট টিম
+    </div>
+  </div>
+
+  <!-- ==================== সূচিপত্র ও ভূমিকা ==================== -->
+  <div>
+    <h1>সূচিপত্র ও নির্বাহী সারসংক্ষেপ (Executive Summary)</h1>
+
+    <div class="callout callout-success">
+      <div class="callout-title">📌 সফটওয়্যারটির মূল উদ্দেশ্য ও ভিশন</div>
+      <p>
+        <strong>ব্যাচেলর হোম হোস্টেল ইআরপি (Bachelor Home ERP)</strong> একটি পূর্ণাঙ্গ, স্বয়ংক্রিয় এবং আধুনিক মেস ও হোস্টেল পরিচালনা প্ল্যাটফর্ম। বাংলাদেশে ব্যাচেলর মেস ও ছাত্রাবাসগুলোতে প্রতিদিনের মিল হিসাব, বাজার খরচ, মিল রেট বণ্টন, সময়মতো মিল অন/অফ না করা নিয়ে দ্বন্দ্ব এবং ভাড়ার বকেয়া আদায় নিয়ে যে জটিলতা তৈরি হয়—তা সম্পূর্ণ দূর করাই এই সফটওয়্যারের মূল লক্ষ্য।
+      </p>
+    </div>
+
+    <h2>ডকুমেন্টের আলোচ্য বিষয়সমূহ:</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 10%;">অধ্যায়</th>
+          <th style="width: 45%;">বিষয়বস্তু</th>
+          <th style="width: 45%;">প্রধান হাইলাইটস</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>অধ্যায় ১</strong></td>
+          <td>সিস্টেম আর্কিটেকচার ও ইউজার পারমিশন (RBAC)</td>
+          <td>সুপার অ্যাডমিন, ম্যানেজার, অ্যাকাউন্ট্যান্ট, বাবুর্চি ও বর্ডারের ভূমিকা</td>
+        </tr>
+        <tr>
+          <td><strong>অধ্যায় ২</strong></td>
+          <td>যুক্তকৃত সকল ফিচারের মডিউলভিত্তিক বিস্তারিত বিবরণী</td>
+          <td>সিট ম্যাট্রিক্স, মিল কাট-অফ, বাজার খাতা, ইনভয়েস, মোবাইল পোর্টাল ও শিট সিঙ্ক</td>
+        </tr>
+        <tr>
+          <td><strong>অধ্যায় ৩</strong></td>
+          <td>কোন ফিচার কীভাবে কাজ করে: বাস্তব অপারেশনাল গাইড</td>
+          <td>বর্ডার অনবোর্ডিং, কাট-অফ রুল, রাত ১০টার পর ওভাররাইড, পেমেন্ট ও মানি রসিদ তৈরি</td>
+        </tr>
+        <tr>
+          <td><strong>অধ্যায় ৪</strong></td>
+          <td>বর্ডার ডেডিকেটেড সেলফ-সার্ভিস মোবাইল অ্যাপ</td>
+          <td>লগইন, মিল টগল, কাউন্টডাউন টাইমার, খতিয়ান, নোটিশ বোর্ড ও কমপ্লেইন বক্স</td>
+        </tr>
+        <tr>
+          <td><strong>অধ্যায় ৫</strong></td>
+          <td>ভবিষ্যতে আরো যেসকল ফিচার এড করা যেতে পারে (পরামর্শ)</td>
+          <td>এসএমএস গেটওয়ে, আরএফআইডি কুপন, সাব-মিটার ক্যালকুলেটর, ইনভেন্টরি ও মাল্টি-মেস</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="avoid-break">
+      <h2>ইউজার পারমিশন ম্যাট্রিক্স (Role-Based Access Control)</h2>
+      <p>সফটওয়্যারটিতে প্রত্যেকের দায়িত্ব ও গোপনীয়তা রক্ষার জন্য কঠোর পারমিশন লেভেল নিশ্চিত করা হয়েছে:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>মডিউল / ফিচার</th>
+            <th>সুপার অ্যাডমিন</th>
+            <th>ম্যানেজার</th>
+            <th>অ্যাকাউন্ট্যান্ট</th>
+            <th>বাবুর্চি / স্টাফ</th>
+            <th>বর্ডার (বাসিন্দা)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>সম্পত্তি ও সিট বরাদ্দ (Seats)</strong></td>
+            <td>সম্পূর্ণ নিয়ন্ত্রণ</td>
+            <td>বরাদ্দ ও পরিবর্তন</td>
+            <td>ভিউ অনলি</td>
+            <td>ভিউ অনলি</td>
+            <td>নিজের সিট ভিউ</td>
+          </tr>
+          <tr>
+            <td><strong>বর্ডার রেজিস্ট্রেশন (KYC)</strong></td>
+            <td>সম্পূর্ণ নিয়ন্ত্রণ</td>
+            <td>ভর্তি ও আপডেট</td>
+            <td>ভিউ অনলি</td>
+            <td>প্রবেশাধিকার নেই</td>
+            <td>নিজের প্রোফাইল</td>
+          </tr>
+          <tr>
+            <td><strong>দৈনিক মিল খাতা ও রস্টার</strong></td>
+            <td>সম্পূর্ণ নিয়ন্ত্রণ</td>
+            <td>লক ও ওভাররাইড</td>
+            <td>হিসাব ভিউ</td>
+            <td>হেডকাউন্ট ভিউ</td>
+            <td>টগল (১০টার পূর্বে)</td>
+          </tr>
+          <tr>
+            <td><strong>বাজার খরচ এন্ট্রি (Bazaar)</strong></td>
+            <td>সম্পূর্ণ নিয়ন্ত্রণ</td>
+            <td>এন্ট্রি ও ক্যাশ কাট</td>
+            <td>পর্যালোচনা ও এডিট</td>
+            <td>ভিউ অনলি</td>
+            <td>সামারি ভিউ</td>
+          </tr>
+          <tr>
+            <td><strong>ভাড়া ইনভয়েস ও রসিদ (Billing)</strong></td>
+            <td>সম্পূর্ণ নিয়ন্ত্রণ</td>
+            <td>আদায় ও রসিদ তৈরি</td>
+            <td>সম্পূর্ণ অর্থ নিয়ন্ত্রণ</td>
+            <td>প্রবেশাধিকার নেই</td>
+            <td>নিজের রসিদ ও বিল</td>
+          </tr>
+          <tr>
+            <td><strong>অডিট ট্রেইল ও সিস্টেম লগ</strong></td>
+            <td>সম্পূর্ণ লগ ভিউ</td>
+            <td>অ্যাকশন লগড হয়</td>
+            <td>অ্যাকশন লগড হয়</td>
+            <td>প্রবেশাধিকার নেই</td>
+            <td>প্রবেশাধিকার নেই</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== অধ্যায় ২: ফিচার বিবরণী ==================== -->
+  <div class="chapter-break">
+    <h1>অধ্যায় ২: সফটওয়্যারটিতে যুক্তকৃত সকল ফিচারের বিস্তারিত বিবরণী</h1>
+    <p>
+      বর্তমান <strong>Bachelor Home ERP</strong> সফটওয়্যারটিতে একটি আধুনিক হোস্টেল বা মেস পরিচালনা করার জন্য প্রয়োজনীয় সকল কোর এবং অ্যাডভান্সড ফিচার ইতিমধ্যে সফলভাবে যুক্ত ও কার্যকর করা হয়েছে। নিচে প্রতিটি ফিচারের বিস্তারিত বিবরণ তুলে ধরা হলো:
+    </p>
+
+    <!-- Module 1 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>১. ৪-স্তরীয় সম্পত্তি ও ভিজ্যুয়াল সিট ম্যাট্রিক্স (Property & Seat Matrix)</h2>
+        <p>ভবন থেকে শুরু করে রুমের প্রতিটি বেড পর্যন্ত রিয়েল-টাইম ট্র্যাকিং ও ভিজ্যুয়াল লেআউট</p>
+      </div>
+
+      <p>
+        হোস্টেলের প্রতিটি আসন নিখুঁতভাবে পরিচালনা করতে ৪ স্তরের হায়ারার্কি আর্কিটেকচার ব্যবহার করা হয়েছে: 
+        <strong>Building (ভবন) &rarr; Flat/Unit (ফ্ল্যাট) &rarr; Room (রুম) &rarr; Seat/Bed (সিট/বেড)</strong>।
+      </p>
+
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">কালার-কোডেড ভিজ্যুয়াল গ্রিড</span>
+            <span class="badge badge-primary">লাইভ ভিউ</span>
+          </div>
+          <p style="font-size: 8pt;">
+            প্রতিটি রুমের সিটগুলো ৪টি নির্দিষ্ট কালার ব্যাজে প্রদর্শিত হয়:
+            <br>• <span class="text-success">🟢 খালি (Available):</span> নতুন বর্ডারের জন্য প্রস্তুত।
+            <br>• <span class="text-danger">🔴 বরাদ্দকৃত (Occupied):</span> বর্ডার বসবাস করছেন।
+            <br>• <span class="text-warning">🟡 বুকড (Booked):</span> অগ্রিম বুকিং দেওয়া।
+            <br>• <span class="badge badge-neutral">⚪ মেরামত (Maintenance):</span> সাময়িক বন্ধ।
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">সিট ও রুম স্পেসিফিকেশন</span>
+            <span class="badge badge-success">মাল্টি-অ্যাট্রিবিউট</span>
+          </div>
+          <p style="font-size: 8pt;">
+            প্রতিটি সিটের অনন্য কোড (যেমন: B1-F3A-R301-S1), পজিশন লেবেল (জানালা সাইড, ডোর সাইড, কর্নার বেড), রুমের ধরন (সিঙ্গেল, ডাবল, ট্রিপল, মাস্টার বেড), অ্যাটাচড বাথরুম ও এসি (AC/Non-AC) স্ট্যাটাস এবং বেস ভাড়া সংরক্ষিত থাকে।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 2 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>২. বর্ডার অনবোর্ডিং ও কেওয়াইসি (Border KYC & Resident Lifecycle)</h2>
+        <p>বর্ডারের জাতীয় পরিচয়পত্র, স্থায়ী ঠিকানা, অভিভাবক তথ্য এবং জামানতের হিসাব</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">পূর্ণাঙ্গ প্রোফাইল ও কেওয়াইসি (KYC)</span>
+            <span class="badge badge-primary">আইনি সুরক্ষা</span>
+          </div>
+          <p style="font-size: 8pt;">
+            বর্ডারের পূর্ণ নাম, মোবাইল নম্বর, এনআইডি (NID) নম্বর, স্থায়ী ঠিকানা (গ্রাম, থানা, জেলা), শিক্ষা প্রতিষ্ঠান বা অফিসের পদবী এবং জরুরি অভিভাবকের নাম ও ফোন নম্বর ডাটাবেজে সংরক্ষিত থাকে।
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">স্বয়ংক্রিয় সিট বরাদ্দ ও ডিপোজিট</span>
+            <span class="badge badge-success">অটো-লিঙ্কড</span>
+          </div>
+          <p style="font-size: 8pt;">
+            ভর্তির সময় ড্রপডাউন থেকে ফাঁকা সিট নির্বাচন করলে সেই সিটের স্ট্যাটাস স্বয়ংক্রিয়ভাবে <strong>Occupied</strong> হয়ে যায় এবং নির্ধারিত মাসিক ভাড়া ও ফেরতযোগ্য জামানত (Security Deposit) যুক্ত হয়।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 3 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৩. মেস মিল ইঞ্জিন ও রাত ১০:০০ টা কাট-অফ রুল (10:00 PM Cutoff Engine)</h2>
+        <p>স্বয়ংক্রিয় কাট-অফ টাইমার, মিল অপচয় রোধ এবং সকালের কিচেন রিকুইজিশন হিসাব</p>
+      </div>
+
+      <p>
+        মেসের সবচেয়ে সংবেদনশীল বিষয় হলো মিল হিসাব। সফটওয়্যারটিতে <strong>কঠোর ১০টা লক নিয়ম (10:00 PM Cutoff Rule)</strong> কার্যকর করা হয়েছে:
+      </p>
+
+      <ul>
+        <li><strong>মিল ইউনিটসমূহ:</strong> সকালের নাস্তা (Breakfast), দুপুরের খাবার (Lunch), রাতের খাবার (Dinner) এবং মেহমান মিল (Guest Meal)। প্রতিটির মান ১, ০ বা ভগ্নাংশ হতে পারে।</li>
+        <li><strong>রাত ১০টার কাট-অফ নীতি:</strong> বর্ডাররা প্রতি রাতে ঠিক রাত <strong>১০:০০:০০ টা পর্যন্ত</strong> পরের দিনের যে কোনো বেলার খাবার অন বা অফ করতে পারবে।</li>
+        <li><strong>স্বয়ংক্রিয় হার্ড-লক:</strong> রাত ১০:০০:০১ বাজার সাথে সাথে পরের দিনের পুরো মিল তালিকা সফটওয়্যারে স্বয়ংক্রিয়ভাবে লক হয়ে যায়। এরপর কোনো বর্ডার খাবার পরিবর্তন করতে পারে না।</li>
+        <li><strong>কাট-অফ কাউন্টডাউন টাইমার:</strong> অ্যাডমিন প্যানেল এবং বর্ডার মোবাইল অ্যাপ উভয় জায়গাতেই রাত ১০টা বাজার কত মিনিট বাকি তা লাইভ সেকেন্ড সহ কাউন্টডাউন হতে থাকে।</li>
+        <li><strong>সিমুলেশন মোড:</strong> টেস্ট করার সুবিধার্থে সফটওয়্যারের উপরে একটি টাইম সিমুলেটর বাটন দেওয়া আছে, যাতে ক্লিক করে রাত ১০টার আগের অবস্থা এবং পরের লক অবস্থা তাৎক্ষণিক পরখ করা যায়।</li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">⚠️ রাত ১০টার পর ম্যানেজার জরুরি ওভাররাইড (Manager Override with Audit Note)</div>
+        <p style="font-size: 8pt; margin: 0;">
+          রাত ১০টার পর কোনো বর্ডার জরুরি প্রয়োজনে খাবার অন বা অফ করতে চাইলে তা শুধুমাত্র ম্যানেজার বা অ্যাডমিন করতে পারবেন। তবে সিস্টেমে স্বচ্ছতা নিশ্চিত করতে প্রতিটি ওভাররাইডের সাথে <strong>বাধ্যতামূলক কারণ (Audit Reason)</strong> লিখতে হয়, যা অডিট লগে অপরিবর্তনীয়ভাবে সংরক্ষিত হয়।
+        </p>
+      </div>
+    </div>
+
+    <!-- Module 4 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৪. সকালের কিচেন রিকুইজিশন ক্যালকুলেটর (Morning Kitchen Requisition)</h2>
+        <p>পরদিনের মিল সংখ্যার ভিত্তিতে চাল, মাছ/মাংস ও ডিমের স্বয়ংক্রিয় রিকুইজিশন পরিমাণ</p>
+      </div>
+
+      <p>
+        রাত ১০টায় মিল তালিকা লক হওয়ার সাথে সাথে সিস্টেম সকালের বাজার ও রান্নার জন্য প্রয়োজনীয় সামগ্রীর স্বয়ংক্রিয় হিসাব প্রস্তুত করে ড্যাশবোর্ডে প্রদর্শন করে:
+      </p>
+      <div class="card-grid">
+        <div class="feature-card">
+          <span class="feature-card-title">🍚 চালের চাহিদা</span>
+          <p style="font-size: 8pt; margin-top: 2px;">মোট খাবার সংখ্যার ওপর ভিত্তি করে জনপ্রতি ১৫০ গ্রাম হারে মোট কত কেজি চাল রান্না করতে হবে তার স্বয়ংক্রিয় হিসাব।</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card-title">🐟 মাছ / মাংসের চাহিদা</span>
+          <p style="font-size: 8pt; margin-top: 2px;">দুপুর ও রাতের মিল সংখ্যার ওপর ভিত্তি করে বাজার থেকে কত কেজি মাছ বা মুরগির মাংস কিনতে হবে তার নির্দেশনা।</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card-title">🥚 নাস্তা ও ডিম আইটেম</span>
+          <p style="font-size: 8pt; margin-top: 2px;">সকালের নাস্তার মোট সংখ্যা অনুযায়ী ডিমের সংখ্যা বা পরোটার পরিমাপের হিসাব।</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-card-title">🥔 শাকসবজি ও মসলা বাজেট</span>
+          <p style="font-size: 8pt; margin-top: 2px;">দৈনিক সাধারণ তরকারি ও মসলাপাতির আনুমানিক শেয়ারিং খরচ নির্ধারণ।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 5 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৫. মেসের দৈনিক বাজার খরচ ও ক্যাশ খাতা (Daily Bazaar Accounting)</h2>
+        <p>ক্যাটাগরিভিত্তিক বাজার এন্ট্রি এবং মেস ক্যাশ ফান্ড থেকে স্বয়ংক্রিয় ব্যালান্স কর্তন</p>
+      </div>
+
+      <ul>
+        <li><strong>ক্যাটাগরি বিভাজন:</strong> মাছ ও মাংস, শাকসবজি ও আলু, চাল ও ডাল, তেল ও মসলা, গ্যাস সিলিন্ডার এবং কিচেন সামগ্রী।</li>
+        <li><strong>খরচের বিবরণী ও রসিদ:</strong> কোন কোন আইটেম কত টাকা দিয়ে কেনা হয়েছে তার বিস্তারিত বিবরণ।</li>
+        <li><strong>অর্থের উৎস (Payer):</strong> বাজার খরচ মেস ক্যাশ বক্স, বিকাশ ফান্ড নাকি ম্যানেজারের নিজস্ব অগ্রিম থেকে করা হয়েছে তা নির্বাচন করা যায়। ক্যাশ বক্স সিলেক্ট করলে অ্যাকাউন্টের ব্যালান্স থেকে সেই টাকা স্বয়ংক্রিয়ভাবে বিয়োগ হয়ে যায়।</li>
+        <li><strong>চলতি মাসের মোট বাজার:</strong> প্রতি মাসের সর্বমোট বাজার খরচের লাইভ যোগফল প্রদর্শিত হয়।</li>
+      </ul>
+    </div>
+
+    <!-- Module 6 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৬. ডাইনামিক মিল রেট ক্যালকুলেশন ইঞ্জিন (Dynamic Meal Rate Engine)</h2>
+        <p>ন্যায্য মিল রেট নির্ধারণের স্বয়ংক্রিয় গাণিতিক ফর্মুলা</p>
+      </div>
+
+      <div class="formula-box">
+প্রতি মিল রেট (Meal Rate) = মোট বাজার খরচ ÷ মোট খাওয়া মিল সংখ্যা (সক্রিয় বর্ডার + মেহমান মিল)
+<br><br>
+বর্ডারের মোট মিল খরচ = বর্ডারের খাওয়া মোট মিল পয়েন্ট × প্রতি মিল রেট + অতিরিক্ত মেহমান মিল চার্জ
+      </div>
+      <p style="font-size: 8pt;">
+        মাস শেষে কোনো জটিল খাতা টানাটানি ছাড়াই সফটওয়্যারটি মিল রেট নির্ধারণ করে এবং প্রতি বর্ডারের ব্যক্তিগত মিল খরচ সরাসরি তার মাসিক ভাড়ার ইনভয়েসে যুক্ত করে দেয়।
+      </p>
+    </div>
+
+    <!-- Module 7 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৭. মাসিক ভাড়া, ইউটিলিটি বিলিং ও ডিজিটাল মানি রসিদ (Billing & Receipts)</h2>
+        <p>আইটেমাইজড ইনভয়েস তৈরি, আংশিক পেমেন্ট গ্রহণ এবং তাৎক্ষণিক মানি রসিদ প্রিন্ট</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">আইটেমাইজড ইনভয়েস</span>
+            <span class="badge badge-primary">মাসের ১ তারিখ</span>
+          </div>
+          <p style="font-size: 8pt;">
+            প্রতিটি বর্ডারের বিলে আলাদা আলাদা খাত থাকে: <strong>১. সিট ভাড়া, ২. মিল খরচ, ৩. ইউটিলিটি বিল (বিদ্যুৎ, গ্যাস, পানি, ময়লা, ওয়াইফাই, খালা/বাবুর্চির বেতন) এবং ৪. পূর্বের বকেয়া</strong>।
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">ডিজিটাল মানি রসিদ (MR-XXXX)</span>
+            <span class="badge badge-success">প্রিন্টযোগ্য</span>
+          </div>
+          <p style="font-size: 8pt;">
+            টাকা আদায়ের সাথে সাথে একটি অফিশিয়াল মানি রসিদ (রসিদ নং, তারিখ, বর্ডারের নাম, পেমেন্ট মেথড যেমন- Cash, bKash, Bank, TrxID সহ) স্বয়ংক্রিয়ভাবে তৈরি হয় যা এক ক্লিকে প্রিন্ট করা যায়।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module 8 -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৮. গুগল শিট লাইভ ক্লাউড ব্যাকআপ ও অডিট ট্রেইল (Google Sheets & Audit Logs)</h2>
+        <p>এক ক্লিকে গুগল শিটে ডাটা ব্যাকআপ এবং নিরাপত্তার জন্য অপরিবর্তনীয় অডিট লগ</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">📊 গুগল শিট ক্লাউড সিঙ্ক</span>
+            <span class="badge badge-success">১-ক্লিক ক্লাউড সিঙ্ক</span>
+          </div>
+          <p style="font-size: 8pt;">
+            ৩১ দিনের পুরো মিল শিট, দৈনিক বাজার ভাউচার এবং জমা-খরচের যাবতীয় খতিয়ান সফটওয়্যার থেকে সরাসরি গুগল শিটে সিঙ্ক ও ব্যাকআপ রাখা যায়।
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-card-title">📢 অপরিবর্তনীয় অডিট ট্রেইল</span>
+            <span class="badge badge-danger">নিরাপত্তা লগ</span>
+          </div>
+          <p style="font-size: 8pt;">
+            সিস্টেমে কে কখন লগইন করল, কে বাজার এন্ট্রি করল, কে রাত ১০টার পর মিল পরিবর্তন করল বা কার থেকে ভাড়া নেওয়া হলো—প্রতিটি কাজ টাইমস্ট্যাম্প সহ স্বয়ংক্রিয়ভাবে রেকর্ড থাকে।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Border Mobile App -->
+    <div class="avoid-break">
+      <div class="module-banner">
+        <h2>৯. বর্ডারদের নিজস্ব সেলফ-সার্ভিস মোবাইল অ্যাপ (Border Mobile PWA Portal)</h2>
+        <p>বর্ডারদের জন্য সম্পূর্ণ পৃথক মোবাইল ওয়েব অ্যাপ্লিকেশন (Standalone PWA)</p>
+      </div>
+
+      <p>
+        বর্ডারদের সুবিধার জন্য সফটওয়্যারটিতে একটি ডেডিকেটেড মোবাইল অ্যাপ পোর্টাল যুক্ত করা হয়েছে (<code>border-app.html</code>), যা বর্ডাররা মোবাইলে অ্যাপের মতো ইন্সটল করে ব্যবহার করতে পারে:
+      </p>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">১</div>
+          <div class="step-content">
+            <div class="step-title">নিরাপদ বর্ডার লগইন ও পাসওয়ার্ড পরিবর্তন</div>
+            <p class="step-desc">বর্ডার তার নিজস্ব মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে লগইন করতে পারে এবং নিজের অ্যাকাউন্টের পাসওয়ার্ড পরিবর্তন করতে পারে।</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">২</div>
+          <div class="step-content">
+            <div class="step-title">সেলফ মিল অন/অফ ও মেহমান মিল যোগ</div>
+            <p class="step-desc">আগামীকালের সকাল, দুপুর ও রাতের খাবার সিঙ্গেল ট্যাপে অন/অফ করতে পারে এবং মেহমান মিল যোগ করতে পারে (রাত ১০টার পূর্বে)।</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">৩</div>
+          <div class="step-content">
+            <div class="step-title">ব্যক্তিগত প্রোফাইল ও সিট বিবরণী</div>
+            <p class="step-desc">নিজের রুম নং, সিট কোড, বেড পজিশন, মাসিক চুক্তিভিত্তিক ভাড়া, জমা দেওয়া জামানত এবং ভর্তির তারিখ দেখতে পারে।</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">৪</div>
+          <div class="step-content">
+            <div class="step-title">লাইভ ডিজিটাল খতিয়ান ও মানি রসিদ ভিউ</div>
+            <p class="step-desc">চলতি মাসে কয়টি মিল খাওয়া হয়েছে, মিল বিল কত হলো, সিট ভাড়া ও ইউটিলিটি বাবদ কত টাকা আসলো, কত টাকা জমা হয়েছে এবং পূর্বের সকল মানি রসিদ দেখতে পারে।</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">৫</div>
+          <div class="step-content">
+            <div class="step-title">আজকের রান্নাঘর মেনু ও নোটিশ বোর্ড</div>
+            <p class="step-desc">আজকে রান্নাঘরে সকাল, দুপুর ও রাতে কি কি রান্না হচ্ছে তা লাইভ দেখতে পারে এবং হোস্টেলের জরুরি নোটিশ পড়তে পারে।</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">৬</div>
+          <div class="step-content">
+            <div class="step-title">ডিজিটাল অভিযোগ বক্স (Maintenance & Complaints)</div>
+            <p class="step-desc">ফ্যান নষ্ট, পানির সমস্যা বা লাইট নষ্ট হলে সরাসরি অ্যাপ থেকে ক্যাটাগরি সিলেক্ট করে ম্যানেজারের কাছে অভিযোগ দাখিল করতে পারে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== অধ্যায় ৩: অপারেশনাল গাইড ==================== -->
+  <div class="chapter-break">
+    <h1>অধ্যায় ৩: কোন ফিচার কীভাবে কাজ করবে (অপারেশনাল ওয়ার্কফ্লো)</h1>
+    <p>নিচে সফটওয়্যারের দৈনন্দিন কাজের প্রতিটি ধাপ কীভাবে সম্পন্ন করতে হবে তা ধাপে ধাপে দেখানো হলো:</p>
+
+    <!-- Workflow 1 -->
+    <div class="avoid-break" style="margin-bottom: 8px;">
+      <h2>ওয়ার্কফ্লো ১: নতুন বর্ডার ভর্তি ও সিট বরাদ্দ দেওয়ার ধাপ</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">১</div>
+          <div class="step-content">
+            <div class="step-title">সিট ম্যাট্রিক্স পরিদর্শন ও ফাঁকা সিট বাছাই</div>
+            <p class="step-desc">ড্যাশবোর্ড থেকে <strong>"সিট ম্যাট্রিক্স"</strong> ট্যাবে যান। সেখানে সবুজ রঙের <strong>Available (খালি)</strong> সিটগুলো দেখতে পাবেন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">২</div>
+          <div class="step-content">
+            <div class="step-title">নতুন বর্ডার ভর্তি ফর্ম পূরণ</div>
+            <p class="step-desc"><strong>"+ নতুন বর্ডার ভর্তি"</strong> বাটনে ক্লিক করুন। বর্ডারের নাম, মোবাইল নম্বর, এনআইডি নম্বর, পেশা/প্রতিষ্ঠান এবং অভিভাবকের তথ্য দিন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">৩</div>
+          <div class="step-content">
+            <div class="step-title">সিট নির্বাচন ও স্বয়ংক্রিয় অ্যাক্টিভেশন</div>
+            <p class="step-desc">ড্রপডাউন থেকে ফাঁকা সিটটি সিলেক্ট করে সাবমিট করুন। সিটটি তৎক্ষণাৎ লাল রঙে <strong>Occupied</strong> হয়ে যাবে এবং বর্ডারের প্রোফাইল একটিভ হয়ে যাবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflow 2 -->
+    <div class="avoid-break" style="margin-bottom: 8px;">
+      <h2>ওয়ার্কফ্লো ২: প্রতিদিনের মিল পরিচালনা ও কাট-অফ সময়ের প্রভাব</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">১</div>
+          <div class="step-content">
+            <div class="step-title">রাত ১০টার পূর্বে (উন্মুক্ত উইন্ডো)</div>
+            <p class="step-desc">বর্ডাররা নিজ নিজ মোবাইল অ্যাপ থেকে পরের দিনের সকাল, দুপুর ও রাতের খাবার অন বা অফ করতে পারবে। ম্যানেজার মিল শিটে পরিবর্তনগুলো লাইভ দেখতে পাবেন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">২</div>
+          <div class="step-content">
+            <div class="step-title">রাত ১০:০০:০১ টায় (স্বয়ংক্রিয় লক)</div>
+            <p class="step-desc">টাইমার শূন্য হওয়া মাত্র মিল শিট লক হয়ে যাবে। বর্ডারের মোবাইল অ্যাপে মিল টগল বাটন ডিজেবল হয়ে যাবে।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">৩</div>
+          <div class="step-content">
+            <div class="step-title">রাত ১০টার পর জরুরি পরিবর্তন (যদি লাগে)</div>
+            <p class="step-desc">ম্যানেজার <strong>"রাত ১০টার পর জরুরি ওভাররাইড"</strong> বাটনে চাপবেন। বর্ডার নির্বাচন করে নতুন মান ও বাধ্যতামূলক কারণ লিখে সাবমিট করবেন।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflow 3 -->
+    <div class="avoid-break" style="margin-bottom: 8px;">
+      <h2>ওয়ার্কফ্লো ৩: বাজার খরচ এন্ট্রি ও ক্যাশ সমন্বয়</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">১</div>
+          <div class="step-content">
+            <div class="step-title">বাজারের তথ্য এন্ট্রি</div>
+            <p class="step-desc"><strong>"বাজার খরচ"</strong> ট্যাবে গিয়ে <strong>"+ নতুন বাজার খরচ যুক্ত করুন"</strong> বাটনে ক্লিক করুন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">২</div>
+          <div class="step-content">
+            <div class="step-title">ক্যাটাগরি, বিবরণ ও টাকা ইনপুট</div>
+            <p class="step-desc">ক্যাটাগরি (মাছ, মাংস, সবজি ইত্যাদি) বেছে নিন, বিবরণ লিখুন, টাকার অংক দিন এবং পরিশোধের উৎস সিলেক্ট করুন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">৩</div>
+          <div class="step-content">
+            <div class="step-title">স্বয়ংক্রিয় ফান্ড কর্তন</div>
+            <p class="step-desc">সাবমিট করলেই মেস ক্যাশ ফান্ড থেকে টাকা কেটে যাবে এবং মোট বাজার খরচের সাথে যোগ হয়ে লাইভ মিল রেট আপডেট হবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflow 4 -->
+    <div class="avoid-break">
+      <h2>ওয়ার্কফ্লো ৪: বকেয়া ভাড়া আদায় ও মানি রসিদ প্রদান</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">১</div>
+          <div class="step-content">
+            <div class="step-title">ইনভয়েস নির্বাচন</div>
+            <p class="step-desc"><strong>"ভাড়া ও বিলিং"</strong> ট্যাবে গিয়ে <strong>"💳 টাকা গ্রহণ ও মানি রসিদ"</strong> বাটনে ক্লিক করুন এবং বর্ডারের বকেয়া ইনভয়েসটি নির্বাচন করুন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">২</div>
+          <div class="step-content">
+            <div class="step-title">টাকার পরিমাণ ও মাধ্যম নির্বাচন</div>
+            <p class="step-desc">আদায়কৃত টাকা (পূর্ণ বা আংশিক), মাধ্যম (Cash / bKash / Bank) এবং বিকাশ হলে TrxID ইনপুট দিন।</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">৩</div>
+          <div class="step-content">
+            <div class="step-title">রসিদ জেনারেশন ও প্রিন্ট</div>
+            <p class="step-desc">সাবমিট করলে স্বয়ংক্রিয় সিরিয়াল নম্বরসহ (যেমন: MR-202610-0044) ডিজিটাল রসিদ ওপেন হবে, যা সরাসরি প্রিন্ট করে বর্ডারকে দেওয়া যাবে।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== অধ্যায় ৫: ভবিষ্যৎ ফিচারের সুপারিশমালা ==================== -->
+  <div class="chapter-break">
+    <h1>অধ্যায় ৫: ভবিষ্যতে আরো যেসকল ফিচার এড করা যেতে পারে (পরামর্শ ও রোডম্যাপ)</h1>
+    <p>
+      বর্তমান সফটওয়্যারটি একটি মেস পরিচালনার সকল মৌলিক ও প্রয়োজনীয় কাজে সম্পূর্ণ স্বয়ংসম্পূর্ণ। তবে সফটওয়্যারটিকে আরও উন্নত, সম্পূর্ণ অটোমেটেড এবং বাণিজ্যিক স্কেলে রূপান্তর করার জন্য নিম্নোক্ত ফিচারগুলো ধাপে ধাপে সংযোজন করার সুপারিশ করা হলো:
+    </p>
+
+    <div class="avoid-break">
+      <h2>১. যোগাযোগ ও নোটিফিকেশন অটোমেশন (Communication & SMS)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">ফিচারের নাম</th>
+            <th style="width: 54%;">কার্যপদ্ধতি ও সুবিধা</th>
+            <th style="width: 18%;">অগ্রাধিকার</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>এসএমএস ও হোয়াটসঅ্যাপ গেটওয়ে (Bulk SMS / WhatsApp API)</strong></td>
+            <td>ভাড়া ও বিল জমা দেওয়ার সাথে সাথে বর্ডার ও তার অভিভাবকের ফোনে স্বয়ংক্রিয় কনফার্মেশন এসএমএস যাবে। এছাড়া রাত ৯:০০ টায় মিল অন/অফ করার রিমাইন্ডার এবং বকেয়া নোটিশ পাঠানো যাবে।</td>
+            <td><span class="badge badge-danger">জরুরি (High)</span></td>
+          </tr>
+          <tr>
+            <td><strong>ইনস্ট্যান্ট পুশ নোটিফিকেশন (Web Push API)</strong></td>
+            <td>বর্ডারদের মোবাইল ব্রাউজারে নোটিশ বা মিল কাট-অফের সময় ঘনিয়ে আসলে স্ক্রিনে পুশ নোটিফিকেশন পপ-আপ পাঠানো।</td>
+            <td><span class="badge badge-warning">মাঝারি (Medium)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h2>২. কিচেন ও ডায়নিং নিরাপত্তা (Dining Hall & Inventory Automation)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">ফিচারের নাম</th>
+            <th style="width: 54%;">কার্যপদ্ধতি ও সুবিধা</th>
+            <th style="width: 18%;">অগ্রাধিকার</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ডায়নিং কিউআর / আরএফআইডি মিল ভেরিফিকেশন (QR / RFID Pass)</strong></td>
+            <td>খাবার খাওয়ার সময় বর্ডার ডায়নিং হলে কিউআর কোড বা কার্ড স্ক্যান করবে। যদি তার মিল অফ থাকে, তবে সিস্টেম তাৎক্ষণিক স্ক্রিনে লাল সংকেত দেবে, ফলে অন্য কারো খাবার নষ্ট বা চুরি হবে না।</td>
+            <td><span class="badge badge-danger">উচ্চ (High)</span></td>
+          </tr>
+          <tr>
+            <td><strong>কিচেন রেশন স্টক ও ইনভেন্টরি ট্র্যাকিং (Store Inventory)</strong></td>
+            <td>একসাথে ৫০ কেজি চালের বস্তা বা ৫ লিটার তেল কিনলে তা স্টকে যোগ হবে। প্রতিদিন বাবুর্চি কতটুকু খরচ করছে তা বাদ গিয়ে অবশিষ্ট স্টক হিসাব থাকবে।</td>
+            <td><span class="badge badge-warning">মাঝারি (Medium)</span></td>
+          </tr>
+          <tr>
+            <td><strong>বাজারের মেমো ছবি আপলোড (Receipt Photo Upload)</strong></td>
+            <td>প্রতিদিনের বাজার শেষে মেমো বা ভাউচারের ছবি মোবাইল দিয়ে তুলে সরাসরি সফটওয়্যারে আপলোড করে রাখার সুবিধা।</td>
+            <td><span class="badge badge-primary">প্রয়োজনীয় (Recommended)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h2>৩. বিদ্যুৎ ও রুম ইউটিলিটি অটোমেশন (Utilities & Room Sub-Meters)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">ফিচারের নাম</th>
+            <th style="width: 54%;">কার্যপদ্ধতি ও সুবিধা</th>
+            <th style="width: 18%;">অগ্রাধিকার</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>রুম সাব-মিটার বিদ্যুৎ ক্যালকুলেটর (Room Sub-Meter Engine)</strong></td>
+            <td>প্রতিটি রুমে আলাদা সাব-মিটার থাকলে বর্তমান রিডিং ও পূর্বের রিডিং বসালে স্বয়ংক্রিয়ভাবে মোট ইউনিট ও ইউনিট প্রতি রেট অনুযায়ী ওই রুমের বর্ডারদের মাঝে বিদ্যুৎ বিল ভাগ করে দেওয়া।</td>
+            <td><span class="badge badge-danger">উচ্চ (High)</span></td>
+          </tr>
+          <tr>
+            <td><strong>বাড়িওয়ালার ভাড়া ও ফ্ল্যাট খরচ ট্র্যাকিং (Landlord Ledger)</strong></td>
+            <td>হোস্টেল মালিক মূল ভবন মালিককে প্রতি মাসে কত টাকা বাড়ি ভাড়া ও হোল্ডিং ট্যাক্স দিচ্ছেন তার পৃথক লেজার।</td>
+            <td><span class="badge badge-neutral">সাধারণ (Normal)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h2>৪. বর্ডার লাইফসাইকেল ও ক্লিয়ারেন্স পলিসি (Notice & Release Policy)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">ফিচারের নাম</th>
+            <th style="width: 54%;">কার্যপদ্ধতি ও সুবিধা</th>
+            <th style="width: 18%;">অগ্রাধিকার</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>সিট ছাড়ার নোটিশ ও ক্লিয়ারেন্স ক্যালকুলেটর (Checkout Clearance)</strong></td>
+            <td>বর্ডার এক মাস পূর্বে সিট ছাড়ার নোটিশ সাবমিট করবে। রিলিজের দিন তার জমা জামানত থেকে চলতি মাসের ভাড়া ও মিল বিল স্বয়ংক্রিয় সমন্বয় করে ফেরতযোগ্য টাকা নির্ধারণ।</td>
+            <td><span class="badge badge-primary">প্রয়োজনীয় (Recommended)</span></td>
+          </tr>
+          <tr>
+            <td><strong>স্বয়ংক্রিয় লেট ফাইন পলিসি (Automated Late Payment Fee)</strong></td>
+            <td>মাসের ১০ তারিখ অতিক্রম করলে প্রতিদিন বা এককালীন নির্দিষ্ট জরিমানা (যেমন: ১০০ টাকা) ইনভয়েসে স্বয়ংক্রিয় যোগ হওয়া।</td>
+            <td><span class="badge badge-neutral">সাধারণ (Normal)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="avoid-break">
+      <h2>৫. মাল্টি-হোস্টেল ও স্টাফ ম্যানেজমেন্ট (Multi-Branch & Staff Payroll)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 28%;">ফিচারের নাম</th>
+            <th style="width: 54%;">কার্যপদ্ধতি ও সুবিধা</th>
+            <th style="width: 18%;">অগ্রাধিকার</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>মাল্টি-ব্রাঞ্চ সুইচিং (Multi-Hostel Branch Switcher)</strong></td>
+            <td>মালিকের অধীনে একাধিক মেস বা হোস্টেল থাকলে একই ড্যাশবোর্ড থেকে এক ক্লিকে বিভিন্ন শাখা পরিবর্তন করে নজরদারি করা।</td>
+            <td><span class="badge badge-warning">মাঝারি (Medium)</span></td>
+          </tr>
+          <tr>
+            <td><strong>বাবুর্চি ও কাজের খালাদের বেতন ও হাজিরা (Staff Payroll)</strong></td>
+            <td>মেসের বাবুর্চি ও খালাদের মাসিক বেতন, অগ্রিম কর্তন এবং ছুটির রেকর্ড সংরক্ষণ।</td>
+            <td><span class="badge badge-neutral">সাধারণ (Normal)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ==================== উপসংহার ও সাইন-অফ ==================== -->
+  <div class="chapter-break">
+    <h1>উপসংহার ও পর্যালোচনা নির্দেশনা (Conclusion & Review Guidance)</h1>
+
+    <div class="callout callout-success">
+      <div class="callout-title">📋 পর্যালোচনা করার জন্য আপনার প্রতি অনুরোধ</div>
+      <p>
+        বর্তমান সফটওয়্যারটিতে মেস পরিচালনার সকল প্রধান স্তম্ভ—<strong>১. সিট ও বর্ডার ডাটাবেজ, ২. ১০টা কাট-অফ মিল খাতা, ৩. কিচেন রিকুইজিশন, ৪. বাজার খরচ ও মিল রেট হিসাব, ৫. মাসিক বিল ও মানি রসিদ, ৬. বর্ডার মোবাইল অ্যাপ এবং ৭. ক্লাউড ব্যাকআপ</strong>—ইতিমধ্যে নিখুঁতভাবে তৈরি ও কার্যকর রয়েছে।
+        <br><br>
+        অনুগ্রহ করে এই ডকুমেন্টটি পর্যালোচনা করে জানান:
+        <br>১. বর্তমান ফিচারগুলো আপনার মেস বা হোস্টেলের নিয়মের সাথে শতভাগ সামঞ্জস্যপূর্ণ কিনা?
+        <br>২. অধ্যায় ৫-এ উল্লেখিত ভবিষ্যৎ ফিচারগুলোর মধ্যে কোনটি আপনার এখনই অগ্রাধিকার ভিত্তিতে প্রয়োজন?
+        <br>৩. আপনার মেসের কোনো বিশেষ নিয়ম বা নিজস্ব ক্যালকুলেশন পলিসি আছে কিনা যা সিস্টেমে যুক্ত করতে চান?
+      </p>
+    </div>
+
+    <h2>সফটওয়্যারের কারিগরি পরিকাঠামো সামারি (Technical Summary):</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>উপাদান</th>
+          <th>ব্যবহৃত প্রযুক্তি</th>
+          <th>কার্যকারিতা</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ব্যাকএন্ড ইঞ্জিন</strong></td>
+          <td>Node.js & Express REST API</td>
+          <td>দ্রুতগতির লাইটওয়েট রিয়েল-টাইম সার্ভিস ও কাট-অফ ভ্যালিডেশন</td>
+        </tr>
+        <tr>
+          <td><strong>ফ্রন্টএন্ড আর্কিটেকচার</strong></td>
+          <td>Modern Vanilla JS, Semantic HTML5 & CSS3</td>
+          <td>উচ্চ কার্যক্ষমতাসম্পন্ন ড্যাশবোর্ড, কোনো অতিরিক্ত ফ্রেমওয়ার্ক ওভারহেড নেই</td>
+        </tr>
+        <tr>
+          <td><strong>মোবাইল প্ল্যাটফর্ম</strong></td>
+          <td>Progressive Web App (PWA)</td>
+          <td>বর্ডারদের মোবাইলে ফুলস্ক্রিন অ্যাপের মতো কাজ করে</td>
+        </tr>
+        <tr>
+          <td><strong>ডাটাবেজ পারসিসটেন্স</strong></td>
+          <td>JSON Structured Data Store + Cloud Sync</td>
+          <td>পোর্টেবল ফাইল ভিত্তিক স্টোরেজ এবং গুগল শিট এক্সপোর্ট</td>
+        </tr>
+        <tr>
+          <td><strong>ভাষা ও লোকাল ফরম্যাট</strong></td>
+          <td>Bilingual (বাংলা ও ইংরেজি), BDT Currency (৳)</td>
+          <td>আন্তর্জাতিক ও দেশীয় ব্যবহারকারীদের জন্য ১০০% উপযোগী</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #cbd5e1; display: flex; justify-content: space-between; font-size: 8pt; color: #64748b;">
+      <div>
+        <strong>ডকুমেন্ট আইডি:</strong> BHH-ERP-DOC-202610
+        <br><strong>তারিখ:</strong> ০৭ অক্টোবর ২০২৬
+      </div>
+      <div style="text-align: right;">
+        <strong>অনুমোদিত ও সংরক্ষিত:</strong>
+        <br>ব্যাচেলর হোম হোস্টেল ম্যানেজমেন্ট সিস্টেম ডেভেলপমেন্ট বোর্ড
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

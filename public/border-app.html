@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>বর্ডার মোবাইল অ্যাপ | Bachelor Home ERP</title>
+  <meta name="description" content="নিরাপদ আইডি ও পাসওয়ার্ড দিয়ে বর্ডার লগইন, মিল অন-অফ, লাইভ ১০টা কাট-অফ টাইমার ও ব্যক্তিগত খতিয়ান।">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body {
+      background: #070b14;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      font-family: 'Hind Siliguri', 'Inter', sans-serif;
+    }
+
+    .mobile-app-shell {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background: #0f172a;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Top App Header */
+    .app-top-header {
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-scroll-body {
+      flex: 1;
+      padding: 20px 16px 85px 16px;
+      overflow-y: auto;
+    }
+
+    /* Login Screen Container */
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 80vh;
+      padding: 10px;
+    }
+
+    .login-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 26px 20px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+    }
+
+    .login-logo {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 16px auto;
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .demo-pill {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      color: #93c5fd;
+      cursor: pointer;
+      margin: 3px 2px;
+      transition: all 0.15s ease;
+    }
+
+    .demo-pill:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      color: #fff;
+    }
+
+    /* Resident Profile Card */
+    .resident-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .resident-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .resident-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .resident-seat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* 10 PM Countdown Banner */
+    .cutoff-hero-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.05));
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .cutoff-timer-digits {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fbbf24;
+      letter-spacing: 0.05em;
+      margin: 4px 0;
+    }
+
+    /* Meal Box */
+    .meal-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .meal-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .meal-row:last-child {
+      border-bottom: none;
+      padding-bottom: 4px;
+    }
+
+    .meal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .meal-icon-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .switch-btn {
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .switch-on {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .switch-off {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+
+    .switch-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Fixed Bottom Navigation */
+    .mobile-app-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      height: 68px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .m-nav-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-family: 'Hind Siliguri', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .m-nav-btn.active {
+      color: #60a5fa;
+    }
+
+    .m-nav-btn span:first-child {
+      font-size: 19px;
+    }
+
+    .app-page { display: none; }
+    .app-page.active { display: block; animation: fadeIn 0.2s ease-out; }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-app-shell">
+    
+    <!-- VIEW A: LOGIN SCREEN (When border is NOT authenticated) -->
+    <div id="view-login" class="login-container" style="display: none;">
+      <div class="login-card">
+        <div class="login-logo">🏠</div>
+        <h2 style="font-size: 20px; font-weight: 800; text-align: center; color: #fff; margin-bottom: 4px;">বর্ডার পোর্টাল লগইন</h2>
+        <p style="font-size: 12.5px; text-align: center; color: #94a3b8; margin-bottom: 22px;">শুধুমাত্র হোস্টেল বর্ডারদের ব্যক্তিগত এক্সেস</p>
+
+        <!-- Error Alert -->
+        <div id="login-error-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+
+        <form id="form-border-login">
+          <div class="form-group">
+            <label class="form-label">মোবাইল নম্বর বা বর্ডার আইডি *</label>
+            <input type="text" id="login-identifier" class="form-input" placeholder="যেমন: 01722334455" required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label">গোপন পাসওয়ার্ড *</label>
+            <input type="password" id="login-password" class="form-input" placeholder="পাসওয়ার্ড লিখুন" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 15px; margin-top: 10px;" id="btn-login-submit">
+            🔐 লগইন করুন
+          </button>
+        </form>
+
+        <!-- Quick Demo Login Switcher Helper -->
+        <div style="margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px;">
+          <small style="color: #64748b; display: block; margin-bottom: 8px; font-weight: 600;">⚡ ডেমো অ্যাকাউন্ট দিয়ে দ্রুত টেস্ট করুন (পাসওয়ার্ড: 123456):</small>
+          <div>
+            <span class="demo-pill" onclick="quickFill('01722334455', '123456')">👤 তানভীর হাসান</span>
+            <span class="demo-pill" onclick="quickFill('01811223344', '123456')">👤 জাহিদুল ইসলাম</span>
+            <span class="demo-pill" onclick="quickFill('01911998877', '123456')">👤 শাকিল আহমেদ</span>
+            <span class="demo-pill" onclick="quickFill('01611334455', '123456')">👤 মাহমুদুর রহমান</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW B: AUTHENTICATED BORDER PORTAL -->
+    <div id="view-portal" style="display: none; flex-direction: column; min-height: 100vh;">
+      
+      <!-- Top App Header -->
+      <header class="app-top-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 20px;">🏠</span>
+          <div>
+            <strong style="font-size: 14.5px; color: #fff; display: block; line-height: 1.2;" id="header-border-name">তানভীর হাসান</strong>
+            <small style="color: #93c5fd; font-size: 11px;" id="header-border-seat">রুম ৩০১ (সিট ১)</small>
+          </div>
+        </div>
+        <div>
+          <!-- Secure Logout Button -->
+          <button type="button" class="btn-outline" style="padding: 5px 12px; font-size: 11.5px; color: #f87171; border-color: rgba(239, 68, 68, 0.4);" id="btn-border-logout" title="সেশন থেকে লগআউট করুন">
+            🚪 লগআউট
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Body Content -->
+      <div class="app-scroll-body">
+        
+        <!-- 1. TAB: HOME (খাবার অন/অফ ও লাইভ কাউন্টডাউন) -->
+        <section class="app-page active" id="tab-home">
+          
+          <!-- Resident Profile Header -->
+          <div class="resident-card">
+            <div class="resident-header">
+              <div class="resident-avatar" id="res-avatar">তা</div>
+              <div>
+                <h2 style="font-size: 17px; font-weight: 700; color: #fff;" id="res-name">তানভীর হাসান</h2>
+                <div style="font-size: 12.5px; color: #94a3b8;" id="res-institution">BRAC Bank Ltd (অফিসার)</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <span class="resident-seat-pill" id="res-seat-tag">🛏️ রুম ৩০১ • জানালা সাইড</span>
+              <span class="badge badge-available">🟢 আপনার সিট অ্যাক্টিভ</span>
+            </div>
+          </div>
+
+          <!-- 10:00 PM Cutoff Clock Banner -->
+          <div class="cutoff-hero-box" id="cutoff-banner">
+            <div style="font-size: 12px; color: #f59e0b; font-weight: 700; text-transform: uppercase;">
+              ⏰ আগামীকালের মিল কাট-অফ টাইমার
+            </div>
+            <div class="cutoff-timer-digits" id="live-timer-digits">02:38:15</div>
+            <div style="font-size: 12px; color: #94a3b8;" id="cutoff-info-note">
+              রাত ১০:০০ টার পর খাবার পরিবর্তন স্বয়ংক্রিয়ভাবে বন্ধ হয়ে যাবে।
+            </div>
+          </div>
+
+          <!-- Tomorrow's Meal Toggle Engine -->
+          <div class="meal-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #fff;">🍲 আগামীকাল (০৮ অক্টোবর) আপনার খাবার:</h3>
+              <span class="badge badge-booked" id="tomorrow-lock-indicator">উন্মুক্ত</span>
+            </div>
+
+            <!-- Breakfast -->
+            <div class="meal-row">
+              <div class="meal-title-group">
+                <div class="meal-icon-circle">🍳</div>
+                <div>
+                  <strong style="font-size: 14px; color: #fff;">সকালের নাস্তা</strong>
+                  <div style="font-size: 11.5px; color: #94a3b8;">সকাল ৮:০০ - ৯:৩০</div>
+                </div>
+              </div>
+              <button class="switch-btn switch-on" id="btn-toggle-breakfast" type="button">অন (১ টি)</button>
+            </div>
+
+            <!-- Lunch -->
+            <div class="meal-row">
+              <div class="meal-title-group">
+                <div class="meal-icon-circle">🍲</div>
+                <div>
+                  <strong style="font-size: 14px; color: #fff;">দুপুরের খাবার</strong>
+                  <div style="font-size: 11.5px; color: #94a3b8;">দুপুর ১:৩০ - ২:৪৫</div>
+                </div>
+              </div>
+              <button class="switch-btn switch-on" id="btn-toggle-lunch" type="button">অন (১ টি)</button>
+            </div>
+
+            <!-- Dinner -->
+            <div class="meal-row">
+              <div class="meal-title-group">
+                <div class="meal-icon-circle">🍗</div>
+                <div>
+                  <strong style="font-size: 14px; color: #fff;">রাতের খাবার</strong>
+                  <div style="font-size: 11.5px; color: #94a3b8;">রাত ৯:৩০ - ১১:০০</div>
+                </div>
+              </div>
+              <button class="switch-btn switch-off" id="btn-toggle-dinner" type="button">অফ (০ টি)</button>
+            </div>
+
+            <!-- Guest Meal -->
+            <div class="meal-row">
+              <div class="meal-title-group">
+                <div class="meal-icon-circle">👥</div>
+                <div>
+                  <strong style="font-size: 14px; color: #fff;">মেহমান মিল</strong>
+                  <div style="font-size: 11.5px; color: #94a3b8;">বন্ধু বা মেহমানের খাবার</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button class="btn-outline" style="padding: 4px 10px;" id="btn-guest-minus" type="button">-</button>
+                <strong style="font-size: 15px; color: #fbbf24;" id="guest-count-val">০</strong>
+                <button class="btn-outline" style="padding: 4px 10px;" id="btn-guest-plus" type="button">+</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Today's Mess Cooking Menu -->
+          <div class="meal-box">
+            <h3 style="font-size: 14.5px; font-weight: 700; color: #fff; margin-bottom: 12px;">📋 আজকের রান্নাঘর মেনু:</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 8px 12px; border-radius: 8px;">
+                <strong style="color: #60a5fa;">🍳 সকাল:</strong> <span id="menu-breakfast">ডিম ভুনা, পরোটা (৩টি), স্পেশাল চা</span>
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 8px 12px; border-radius: 8px;">
+                <strong style="color: #34d399;">🍲 দুপুর:</strong> <span id="menu-lunch">রুই মাছ ভুনা, আলু-পটলের তরকারি, মসুর ডাল, গরম ভাত</span>
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.02); padding: 8px 12px; border-radius: 8px;">
+                <strong style="color: #f87171;">🍗 রাত:</strong> <span id="menu-dinner">সোনালি মুরগির মাংস, করলা ভাজি, ঘন ডাল, ভাত</span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- 2. TAB: MY INFO (আমার তথ্য ও সিট প্রোফাইল) -->
+        <section class="app-page" id="tab-profile">
+          <div class="resident-card">
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #93c5fd;">👤 আপনার ব্যক্তিগত ও সিট তথ্য</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">মোবাইল নম্বর (লগইন আইডি):</span>
+                <strong id="prof-phone">01722334455</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">এনআইডি নম্বর:</span>
+                <span id="prof-nid">19952691234567890</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">ভবন ও ফ্ল্যাট:</span>
+                <span id="prof-building">গ্রিন ভিউ ভবন • ফ্ল্যাট ৩-এ</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">রুম ও সিট কোড:</span>
+                <strong style="color: #60a5fa;" id="prof-seat">রুম ৩০১ (B1-F3A-R301-S1)</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">মাসিক চুক্তিভিত্তিক ভাড়া:</span>
+                <strong id="prof-rent">৳ ৩,৫০০.০০</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">জামানত জমা (Deposit):</span>
+                <strong style="color: #34d399;" id="prof-deposit">৳ ৩,৫০০.০০ (পরিশোধিত)</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">হোস্টেলে ভর্তির তারিখ:</span>
+                <span id="prof-checkin">০১ আগস্ট ২০২৬</span>
+              </div>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px; margin-top: 4px;">
+                <div style="color: #94a3b8; margin-bottom: 2px;">জরুরি অভিভাবক:</div>
+                <strong id="prof-guardian">মোঃ আবুল কাশেম (বাবা) • 01811223344</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Change Password Box -->
+          <div class="meal-box">
+            <h3 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px;">🔒 পাসওয়ার্ড পরিবর্তন করুন</h3>
+            <form id="form-change-password">
+              <div class="form-group">
+                <label class="form-label">বর্তমান পুরাতন পাসওয়ার্ড</label>
+                <input type="password" id="old-pass" class="form-input" placeholder="বর্তমান পাসওয়ার্ড লিখুন" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">নতুন পাসওয়ার্ড</label>
+                <input type="password" id="new-pass" class="form-input" placeholder="নতুন পাসওয়ার্ড লিখুন" required>
+              </div>
+              <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                পাসওয়ার্ড আপডেট করুন
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- 3. TAB: FINANCE & LEDGER (হিসাব ও খতিয়ান) -->
+        <section class="app-page" id="tab-finance">
+          <div class="resident-card">
+            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #34d399;">💳 চলতি মাসের খতিয়ান ও বিলিং</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">মাসিক সিট ভাড়া:</span>
+                <span id="fin-rent">৳ ৩,৫০০.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">মিল খরচ (চলতি ৪২.৫ টি):</span>
+                <span id="fin-meals">৳ ২,৬৪৫.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">বিদ্যুৎ, গ্যাস ও ওয়াইফাই:</span>
+                <span>৳ ৭০০.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">খালা ও রান্নার খরচ:</span>
+                <span>৳ ৪০০.০০</span>
+              </div>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 10px; display: flex; justify-content: space-between; font-weight: 700;">
+                <span>সর্বমোট প্রদেয় বিল:</span>
+                <span id="fin-total" style="color: #fff;">৳ ৭,২৪৫.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 700; color: #34d399;">
+                <span>মোট পরিশোধিত:</span>
+                <span id="fin-paid">৳ ৭,২৪৫.০০</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; color: #34d399; margin-top: 4px;">
+                <span>অবশিষ্ট বকেয়া:</span>
+                <span id="fin-due">৳ ০.০০ (ক্লিয়ার)</span>
+              </div>
+            </div>
+
+            <button class="btn-success" style="width: 100%; justify-content: center; padding: 12px; font-size: 14px;" type="button" onclick="alert('✅ আপনার চলতি মাসে কোনো বকেয়া নেই! সব বিল পরিশোধিত।')">
+              📱 বিকাশ / নগদ দিয়ে ফি পরিশোধ
+            </button>
+          </div>
+
+          <!-- Payment History Receipts -->
+          <div class="meal-box">
+            <h4 style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 10px;">📜 পরিশোধের মানি রসিদ সমূহ:</h4>
+            <div id="portal-receipts-list" style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. TAB: NOTICES & COMPLAINT (নোটিশ ও অভিযোগ) -->
+        <section class="app-page" id="tab-notices">
+          <!-- Notice Board -->
+          <div class="meal-box">
+            <h3 style="font-size: 15px; font-weight: 700; color: #fbbf24; margin-bottom: 12px;">📢 মেস নোটিশ বোর্ড</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; padding: 10px 12px; border-radius: 4px;">
+                <strong style="color: #fff; font-size: 13.5px;">আগামীকাল গ্যাস সিলিন্ডার পরিবর্তন</strong>
+                <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">দুপুর ২টা থেকে ৩টা পর্যন্ত রান্নাঘরের গ্যাস সাময়িক বন্ধ থাকবে।</div>
+                <small style="color: #f59e0b; font-size: 11px;">তারিখ: ০৭ অক্টোবর ২০২৬</small>
+              </div>
+              <div style="background: rgba(59, 130, 246, 0.08); border-left: 3px solid #3b82f6; padding: 10px 12px; border-radius: 4px;">
+                <strong style="color: #fff; font-size: 13.5px;">মাসের ১০ তারিখের মধ্যে ভাড়া পরিশোধ</strong>
+                <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;">সকল বর্ডারকে চলতি মাসের ১০ তারিখের মধ্যে সিট ও মিল বিল পরিশোধের অনুরোধ করা হলো।</div>
+                <small style="color: #60a5fa; font-size: 11px;">তারিখ: ০৫ অক্টোবর ২০২৬</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Maintenance / Complaint Box -->
+          <div class="meal-box">
+            <h3 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px;">🛠️ অভিযোগ ও মেরামত রিকোয়েস্ট</h3>
+            <form id="form-portal-complaint">
+              <div class="form-group">
+                <label class="form-label">সমস্যার ক্যাটাগরি</label>
+                <select class="form-select" id="cmp-category" required>
+                  <option value="বৈদ্যুতিক (ফ্যান/লাইট/সুইচ)">বৈদ্যুতিক (ফ্যান/লাইট/সুইচ)</option>
+                  <option value="প্লাম্বিং (পানি/বাথরুম/ট্যাপ)">প্লাম্বিং (পানি/বাথরুম/ট্যাপ)</option>
+                  <option value="ওয়াইফাই / ইন্টারনেট">ওয়াইফাই / ইন্টারনেট</option>
+                  <option value="খাবার বা বাবুর্চি সংক্রান্ত">খাবার বা বাবুর্চি সংক্রান্ত</option>
+                  <option value="অন্যান্য সমস্যা">অন্যান্য সমস্যা</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">সমস্যার বিস্তারিত বিবরণ</label>
+                <textarea class="form-textarea" id="cmp-desc" rows="2" placeholder="যেমন: রুমের সিলিং ফ্যান থেকে আওয়াজ হচ্ছে..." required></textarea>
+              </div>
+              <button class="btn-primary" style="width: 100%; justify-content: center;" type="submit">
+                ম্যানেজারের কাছে পাঠান
+              </button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Mobile Fixed Bottom Navigation Bar -->
+      <nav class="mobile-app-bottom-bar">
+        <button class="m-nav-btn active" data-page="tab-home">
+          <span>🍲</span>
+          <span>খাবার</span>
+        </button>
+        <button class="m-nav-btn" data-page="tab-profile">
+          <span>👤</span>
+          <span>প্রোফাইল</span>
+        </button>
+        <button class="m-nav-btn" data-page="tab-finance">
+          <span>💳</span>
+          <span>হিসাব</span>
+        </button>
+        <button class="m-nav-btn" data-page="tab-notices">
+          <span>📢</span>
+          <span>নোটিশ</span>
+        </button>
+      </nav>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Border Authentication & Portal Engine
+    const portalState = {
+      session: null, // { borderId, name, phone, token }
+      borderData: null,
+      isCutoffLocked: false,
+      meals: { breakfast: 1, lunch: 1, dinner: 0, guest: 0 }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuthSession();
+      setupMobileNavigation();
+      startPortalCutoffTimer();
+      setupAuthForms();
+      setupMealToggles();
+    });
+
+    // 1. Session & Auth Check
+    function checkAuthSession() {
+      const stored = localStorage.getItem('bachelor_border_session');
+      if (stored) {
+        try {
+          portalState.session = JSON.parse(stored);
+          showPortalView();
+          loadBorderData(portalState.session.phone);
+        } catch (e) {
+          showLoginView();
+        }
+      } else {
+        showLoginView();
+      }
+    }
+
+    function showLoginView() {
+      document.getElementById('view-login').style.display = 'flex';
+      document.getElementById('view-portal').style.display = 'none';
+    }
+
+    function showPortalView() {
+      document.getElementById('view-login').style.display = 'none';
+      document.getElementById('view-portal').style.display = 'flex';
+    }
+
+    // Quick Fill Demo helper
+    window.quickFill = function(phone, pass) {
+      document.getElementById('login-identifier').value = phone;
+      document.getElementById('login-password').value = pass;
+    };
+
+    // 2. Auth Forms Setup
+    function setupAuthForms() {
+      // Login Form Submit
+      document.getElementById('form-border-login').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const identifier = document.getElementById('login-identifier').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+        const errAlert = document.getElementById('login-error-alert');
+        errAlert.style.display = 'none';
+
+        try {
+          const res = await fetch('/api/v1/portal/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ identifier, password })
+          }).then(r => r.json());
+
+          if (res.success) {
+            portalState.session = {
+              borderId: res.data.border.id,
+              name: res.data.border.name,
+              phone: res.data.border.phone,
+              token: res.data.token
+            };
+            localStorage.setItem('bachelor_border_session', JSON.stringify(portalState.session));
+            showPortalView();
+            loadBorderData(portalState.session.phone);
+          } else {
+            errAlert.textContent = res.message || "ভুল মোবাইল নম্বর বা পাসওয়ার্ড।";
+            errAlert.style.display = 'block';
+          }
+        } catch (err) {
+          errAlert.textContent = "সার্ভারে সংযোগ করা সম্ভব হয়নি।";
+          errAlert.style.display = 'block';
+        }
+      });
+
+      // Logout Button
+      document.getElementById('btn-border-logout').addEventListener('click', () => {
+        if (confirm("আপনি কি নিশ্চিতভাবে বর্ডার অ্যাপ থেকে লগআউট করতে চান?")) {
+          localStorage.removeItem('bachelor_border_session');
+          portalState.session = null;
+          portalState.borderData = null;
+          showLoginView();
+        }
+      });
+
+      // Change Password Form
+      document.getElementById('form-change-password').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldPassword = document.getElementById('old-pass').value;
+        const newPassword = document.getElementById('new-pass').value;
+
+        try {
+          const res = await fetch('/api/v1/portal/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              borderId: portalState.session.borderId,
+              oldPassword,
+              newPassword
+            })
+          }).then(r => r.json());
+
+          if (res.success) {
+            alert("✅ " + res.message);
+            document.getElementById('form-change-password').reset();
+          } else {
+            alert("❌ " + res.message);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+
+      // Complaint Form
+      document.getElementById('form-portal-complaint').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          borderId: portalState.session.borderId,
+          category: document.getElementById('cmp-category').value,
+          description: document.getElementById('cmp-desc').value
+        };
+
+        const res = await fetch('/api/v1/portal/submit-complaint', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(r => r.json());
+
+        if (res.success) {
+          alert('✅ ' + res.message);
+          document.getElementById('form-portal-complaint').reset();
+        }
+      });
+    }
+
+    // 3. Navigation
+    function setupMobileNavigation() {
+      const navBtns = document.querySelectorAll('.m-nav-btn');
+      navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-page');
+          navBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+          document.getElementById(target)?.classList.add('active');
+        });
+      });
+    }
+
+    // 4. Cutoff Timer
+    function startPortalCutoffTimer() {
+      const timerEl = document.getElementById('live-timer-digits');
+      function update() {
+        const now = new Date();
+        const target = new Date();
+        target.setHours(22, 0, 0, 0);
+
+        let diff = target - now;
+        if (diff <= 0) {
+          portalState.isCutoffLocked = true;
+          if (timerEl) timerEl.textContent = "00:00:00 (লক্ড)";
+          document.getElementById('cutoff-info-note').textContent = "⚠️ রাত ১০:০০ অতিক্রান্ত। খাবার পরিবর্তন লক হয়ে গেছে।";
+          document.getElementById('tomorrow-lock-indicator').textContent = "লক্ড";
+          document.getElementById('tomorrow-lock-indicator').className = "badge badge-occupied";
+          disableMealButtons();
+        } else {
+          const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+          const mins = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+          const secs = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+          if (timerEl) timerEl.textContent = `${hours}:${mins}:${secs}`;
+        }
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    function disableMealButtons() {
+      document.getElementById('btn-toggle-breakfast').disabled = true;
+      document.getElementById('btn-toggle-lunch').disabled = true;
+      document.getElementById('btn-toggle-dinner').disabled = true;
+      document.getElementById('btn-guest-minus').disabled = true;
+      document.getElementById('btn-guest-plus').disabled = true;
+    }
+
+    // 5. Load Data for Specific Border
+    async function loadBorderData(phone) {
+      try {
+        const res = await fetch(`/api/v1/portal/me?phone=${phone}`).then(r => r.json());
+        if (res.success) {
+          portalState.borderData = res.data;
+          renderPortalUI(res.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderPortalUI(d) {
+      const b = d.border;
+      const s = d.stay;
+      const m = d.meals;
+      const f = d.finance;
+
+      document.getElementById('header-border-name').textContent = b.name;
+      document.getElementById('header-border-seat').textContent = `${s.roomNumber} (${s.seatCode})`;
+      document.getElementById('res-name').textContent = b.name;
+      document.getElementById('res-avatar').textContent = b.name.charAt(0);
+      document.getElementById('res-institution').textContent = b.institution || "বর্ডার";
+      document.getElementById('res-seat-tag').textContent = `🛏️ ${s.roomNumber} • ${s.seatLabel}`;
+
+      // Profile tab
+      document.getElementById('prof-phone').textContent = b.phone;
+      document.getElementById('prof-nid').textContent = b.nidNumber;
+      document.getElementById('prof-building').textContent = `${s.buildingName} • ${s.flatNumber}`;
+      document.getElementById('prof-seat').textContent = `${s.roomNumber} (${s.seatCode})`;
+      document.getElementById('prof-rent').textContent = `৳ ${s.agreedRent.toLocaleString()}.০০`;
+      document.getElementById('prof-deposit').textContent = `৳ ${s.securityDeposit.toLocaleString()}.০০`;
+      document.getElementById('prof-checkin').textContent = s.checkInDate;
+      document.getElementById('prof-guardian').textContent = `${b.emergencyContactName} • ${b.emergencyContactPhone}`;
+
+      // Finance tab
+      document.getElementById('fin-rent').textContent = `৳ ${s.agreedRent.toLocaleString()}.০০`;
+      const inv = f.invoice;
+      document.getElementById('fin-total').textContent = `৳ ${inv.totalAmount.toLocaleString()}.০০`;
+      document.getElementById('fin-paid').textContent = `৳ ${inv.paidAmount.toLocaleString()}.০০`;
+      document.getElementById('fin-due').textContent = inv.dueAmount === 0 ? "৳ ০.০০ (সম্পূর্ণ পরিশোধিত)" : `৳ ${inv.dueAmount.toLocaleString()}.০০`;
+
+      // Receipts
+      const rList = document.getElementById('portal-receipts-list');
+      rList.innerHTML = '';
+      if (f.receipts && f.receipts.length > 0) {
+        f.receipts.forEach(rcp => {
+          const div = document.createElement('div');
+          div.style.background = 'rgba(255, 255, 255, 0.02)';
+          div.style.padding = '10px';
+          div.style.borderRadius = '8px';
+          div.style.border = '1px solid rgba(255, 255, 255, 0.06)';
+          div.style.display = 'flex';
+          div.style.justifyContent = 'space-between';
+          div.style.alignItems = 'center';
+
+          div.innerHTML = `
+            <div>
+              <strong style="color: #93c5fd;">${rcp.receiptNo}</strong>
+              <div style="font-size: 11px; color: #94a3b8;">${rcp.date} • ${rcp.method}</div>
+            </div>
+            <div style="text-align: right;">
+              <strong style="color: #34d399;">৳ ${rcp.amount.toLocaleString()}.০০</strong>
+              <div style="font-size: 11px; color: #34d399;">পরিশোধিত</div>
+            </div>
+          `;
+          rList.appendChild(div);
+        });
+      } else {
+        rList.innerHTML = `<small style="color: var(--text-dim);">কোনো পরিশোধের রেকর্ড পাওয়া যায়নি।</small>`;
+      }
+
+      // Meal status
+      portalState.meals = {
+        breakfast: m.tomorrow.breakfast,
+        lunch: m.tomorrow.lunch,
+        dinner: m.tomorrow.dinner,
+        guest: m.tomorrow.guest || 0
+      };
+      updateMealButtonStyles();
+    }
+
+    // 6. Meal Toggles
+    function setupMealToggles() {
+      const bBtn = document.getElementById('btn-toggle-breakfast');
+      const lBtn = document.getElementById('btn-toggle-lunch');
+      const dBtn = document.getElementById('btn-toggle-dinner');
+      const gMinus = document.getElementById('btn-guest-minus');
+      const gPlus = document.getElementById('btn-guest-plus');
+
+      bBtn.addEventListener('click', () => toggleMeal('breakfast'));
+      lBtn.addEventListener('click', () => toggleMeal('lunch'));
+      dBtn.addEventListener('click', () => toggleMeal('dinner'));
+
+      gMinus.addEventListener('click', () => {
+        if (portalState.meals.guest > 0) {
+          portalState.meals.guest--;
+          sendMealUpdate('guest', portalState.meals.guest);
+        }
+      });
+
+      gPlus.addEventListener('click', () => {
+        portalState.meals.guest++;
+        sendMealUpdate('guest', portalState.meals.guest);
+      });
+    }
+
+    function toggleMeal(type) {
+      if (portalState.isCutoffLocked) {
+        alert("⚠️ রাত ১০:০০ টার পর পরদিনের খাবার পরিবর্তন বন্ধ। জরুরি প্রয়োজনে মেস ম্যানেজারের সাথে যোগাযোগ করুন।");
+        return;
+      }
+      portalState.meals[type] = portalState.meals[type] > 0 ? 0 : 1;
+      sendMealUpdate(type, portalState.meals[type]);
+    }
+
+    async function sendMealUpdate(type, val) {
+      updateMealButtonStyles();
+      try {
+        const res = await fetch('/api/v1/meals/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            borderId: portalState.session.borderId,
+            date: "2026-10-08",
+            mealType: type,
+            value: val,
+            simulatedAfter10: portalState.isCutoffLocked
+          })
+        }).then(r => r.json());
+
+        if (!res.success) {
+          alert(res.error?.message || "এরর ঘটেছে");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function updateMealButtonStyles() {
+      const bBtn = document.getElementById('btn-toggle-breakfast');
+      const lBtn = document.getElementById('btn-toggle-lunch');
+      const dBtn = document.getElementById('btn-toggle-dinner');
+      const gVal = document.getElementById('guest-count-val');
+
+      if (portalState.meals.breakfast > 0) {
+        bBtn.className = "switch-btn switch-on";
+        bBtn.textContent = "অন (১ টি)";
+      } else {
+        bBtn.className = "switch-btn switch-off";
+        bBtn.textContent = "অফ (০ টি)";
+      }
+
+      if (portalState.meals.lunch > 0) {
+        lBtn.className = "switch-btn switch-on";
+        lBtn.textContent = "অন (১ টি)";
+      } else {
+        lBtn.className = "switch-btn switch-off";
+        lBtn.textContent = "অফ (০ টি)";
+      }
+
+      if (portalState.meals.dinner > 0) {
+        dBtn.className = "switch-btn switch-on";
+        dBtn.textContent = "অন (১ টি)";
+      } else {
+        dBtn.className = "switch-btn switch-off";
+        dBtn.textContent = "অফ (০ টি)";
+      }
+
+      gVal.textContent = portalState.meals.guest;
+    }
+  </script>
+</body>
+</html>

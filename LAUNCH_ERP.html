@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bachelor Home Hostel ERP - কুইক লঞ্চার (Launcher)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 20%, #1e293b 0%, #070b14 100%);
+      color: #f8fafc;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .launcher-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 36px 32px;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 540px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .launch-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .launch-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    .btn-admin {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(29, 78, 216, 0.35));
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .btn-admin:hover {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.35), rgba(29, 78, 216, 0.55));
+      border-color: #3b82f6;
+    }
+    .btn-border {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.3));
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .btn-border:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(5, 150, 105, 0.48));
+      border-color: #10b981;
+    }
+    .icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .desc {
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .creds-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+      font-size: 13px;
+    }
+    .creds-title {
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .creds-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .creds-row:last-child { border-bottom: none; }
+    .creds-label { color: #cbd5e1; }
+    .creds-val { color: #60a5fa; font-family: monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <div class="launcher-card">
+    <div class="badge">🚀 সফটওয়্যার চালু লিংক</div>
+    <h1>Bachelor Home Hostel ERP</h1>
+    <p class="subtitle">নিচের যে কোনো লিংকে ক্লিক করে সরাসরি সিস্টেমে প্রবেশ করুন</p>
+
+    <div class="grid">
+      <!-- Admin Portal -->
+      <a href="http://localhost:3000/" target="_blank" class="launch-btn btn-admin">
+        <span class="icon">🖥️</span>
+        <span class="title">অ্যাডমিন ড্যাশবোর্ড</span>
+        <span class="desc">ম্যানেজার, অ্যাকাউন্ট্যান্ট ও স্টাফ প্যানেল</span>
+      </a>
+
+      <!-- Border Portal -->
+      <a href="http://localhost:3000/border-app.html" target="_blank" class="launch-btn btn-border">
+        <span class="icon">📱</span>
+        <span class="title">বর্ডার মোবাইল অ্যাপ</span>
+        <span class="desc">মিল অন-অফ ও ব্যক্তিগত হিসাব খাতা</span>
+      </a>
+    </div>
+
+    <!-- Credentials Quick Card -->
+    <div class="creds-box">
+      <div class="creds-title">🔑 টেস্ট ও ডেমো লগইন তথ্য:</div>
+      <div class="creds-row">
+        <span class="creds-label">👑 সুপার অ্যাডমিন:</span>
+        <span class="creds-val">01700000001 (pass: admin123)</span>
+      </div>
+      <div class="creds-row">
+        <span class="creds-label">📋 মেস ম্যানেজার:</span>
+        <span class="creds-val">01700000002 (pass: admin123)</span>
+      </div>
+      <div class="creds-row">
+        <span class="creds-label">👤 বর্ডার (তানভীর):</span>
+        <span class="creds-val">01722334455 (pass: 123456)</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
